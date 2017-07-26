@@ -11,7 +11,8 @@
     <!--PieceCollector's Background colors-->
     <color name="White">#FFFFFF</color>
     <color name="Black">#000000</color>
-    <color name="LightGray">#F2F2F2</color>
+    <color name="LightGray">#fafafa</color>
+    <!--<color name="LightGray">#F2F2F2</color>-->
 
     <!--PieceCollector's Text colors-->
     <color name="PrimaryTextBlack">#212121</color>
