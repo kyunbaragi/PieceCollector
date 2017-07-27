@@ -5,19 +5,19 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
-            android:title="home" />
+            android:title="Home" />
         <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_history"
-            android:title="history" />
+            android:title="History" />
         <item
             android:id="@+id/nav_badge"
             android:icon="@drawable/ic_badge"
-            android:title="badge" />
+            android:title="Badge" />
         <item
             android:id="@+id/nav_setting"
             android:icon="@drawable/ic_setting"
-            android:title="setting" />
+            android:title="Setting" />
     </group>
 
 </menu>

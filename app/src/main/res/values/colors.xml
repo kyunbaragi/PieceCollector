@@ -4,14 +4,15 @@
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
     <!--<color name="colorAccent">#FF4081</color>-->
 
-    <color name="colorPrimary">#F06292</color>
-    <color name="colorPrimaryDark">#E91E63</color>
-    <color name="colorAccent">#2196F3</color>
+    <color name="colorPrimary">#424242</color>
+    <color name="colorPrimaryDark">#212121</color>
+    <color name="colorAccent">#64B5F6</color>
 
     <!--PieceCollector's Background colors-->
     <color name="White">#FFFFFF</color>
     <color name="Black">#000000</color>
     <color name="LightGray">#fafafa</color>
+    <color name="Transparent">#00000000</color>
     <!--<color name="LightGray">#F2F2F2</color>-->
 
     <!--PieceCollector's Text colors-->
@@ -26,9 +27,13 @@
     <color name="Divider">#e0e0e0</color>
 
     <!--PieceCollector's Primary colors-->
-    <color name="colorMyPrimaryLight">#F8BBD0</color>
-    <color name="colorMyPrimary">#F06292</color>
-    <color name="colorMyPrimaryDark">#E91E63</color>
+    <!--<color name="colorMyPrimaryLight">#F8BBD0</color>-->
+    <!--<color name="colorMyPrimary">#F06292</color>-->
+    <!--<color name="colorMyPrimaryDark">#E91E63</color>-->
+
+    <color name="colorMyPrimaryLight">#616161</color>
+    <color name="colorMyPrimary">#424242</color>
+    <color name="colorMyPrimaryDark">#212121</color>
 
     <!--PieceCollector's Secondary colors-->
     <color name="colorMySecondaryLight">#BBDEFB</color>

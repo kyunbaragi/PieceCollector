@@ -3,22 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/side_nav_bar"
-    android:gravity="bottom"
     android:orientation="vertical"
+    android:background="@color/LightGray"
+    android:gravity="bottom"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:paddingTop="@dimen/activity_vertical_margin">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:src="@drawable/logo_app"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/Transparent"/>
+
+    <!--<ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
+        app:srcCompat="@android:drawable/sym_def_app_icon" />-->
 
     <TextView
         android:layout_width="match_parent"
@@ -26,7 +36,7 @@
         android:gravity="center_horizontal"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:textSize="14sp"
-        android:textColor="@color/PrimaryTextWhite"
+        android:textColor="@color/PrimaryTextBlack"
         android:text="YunKyun Han" />
 
     <TextView
@@ -35,7 +45,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="12dp"
-        android:textColor="@color/PrimaryTextWhite"
+        android:textColor="@color/SecondaryTextBlack"
         android:text="kyunbaragi@daum.net" />
 
 </LinearLayout>
