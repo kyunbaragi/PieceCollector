@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,10 +17,10 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_main) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
     @BindView(R.id.nav_view) NavigationView navigationView;
-    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.fab_map) FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +30,16 @@ public class MainActivity extends AppCompatActivity
 
         setToolbar();
         setDrawer();
-        //setFloatingActionButton();
     }
 
-    @OnClick({R.id.fab, R.id.btn_menu})
+    @OnClick({R.id.fab_map, R.id.btn_menu})
     void onButtonClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.btn_menu:
                 drawer.openDrawer(GravityCompat.START);
                 break;
-            case R.id.fab:
+            case R.id.fab_map:
                 Intent intent = new Intent(MainActivity.this, MapActivity.class);
                 startActivity(intent);
                 break;
@@ -51,22 +49,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setDrawer() {
-        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();*/
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void setFloatingActionButton() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     private void setToolbar() {
@@ -86,7 +69,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         switch (id) {
             case R.id.nav_home:
                     break;
