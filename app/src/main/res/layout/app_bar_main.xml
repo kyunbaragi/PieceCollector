@@ -56,6 +56,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/colorMyPrimary"
-        android:src="@android:drawable/ic_dialog_map" />
+        android:src="@drawable/ic_map" />
 
 </android.support.design.widget.CoordinatorLayout>

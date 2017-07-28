@@ -1,6 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/LightGray">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/login_top_panel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/LightGray"
+        android:layout_weight="5">
+
+        <ImageView
+        android:layout_width="160dp"
+        android:layout_height="240dp"
+        android:src="@drawable/logo_vertical"
+        android:scaleType="centerInside"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/login_top_panel"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/HintTextBlack"
+            android:textSize="14sp"
+            android:text="당신의 여행조각모음을 시작합니다." />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/login_bottom_panel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <ImageView
+            android:id="@+id/login_kakao"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/kakao2" />
+
+        <ImageView
+            android:id="@+id/login_facebook"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="6dp"
+            android:layout_toLeftOf="@id/login_kakao"
+            android:src="@drawable/facebook2" />
+
+        <ImageView
+            android:id="@+id/login_naver"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@id/login_kakao"
+            android:src="@drawable/naver2" />
+
+    </RelativeLayout>
 
 </LinearLayout>
