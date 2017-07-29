@@ -8,19 +8,19 @@
         android:targetSdkVersion="25" />
 
     <application
-        android:name=".CustomStartApp"
+        android:name=".CustomApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo_app"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".LoginActivity"
+        <activity android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".SplashActivity"
+        <activity android:name=".activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,12 +28,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".activity.MainActivity"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".MapActivity"
+        <activity android:name=".activity.MapActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".activity.PlaceActivity"
             android:screenOrientation="portrait">
         </activity>
 

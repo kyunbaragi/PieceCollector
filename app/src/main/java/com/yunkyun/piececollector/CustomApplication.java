@@ -8,7 +8,7 @@ import com.tsengvn.typekit.Typekit;
  * Created by YunKyun on 2017-07-28.
  */
 
-public class CustomStartApp extends Application {
+public class CustomApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();

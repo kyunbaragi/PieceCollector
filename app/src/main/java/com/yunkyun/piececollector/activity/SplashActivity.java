@@ -1,9 +1,11 @@
-package com.yunkyun.piececollector;
+package com.yunkyun.piececollector.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.yunkyun.piececollector.R;
 
 /**
  * Created by YunKyun on 2017-07-26.
@@ -20,7 +22,7 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 overridePendingTransition(0, android.R.anim.fade_out);
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 finish();
             }
         }, SPLASH_TIME);
