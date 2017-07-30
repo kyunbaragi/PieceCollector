@@ -1,6 +1,5 @@
 package com.yunkyun.piececollector;
 
-import android.Manifest;
 import android.content.Context;
 
 import com.gun0912.tedpermission.PermissionListener;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
  */
 
 public class PermissionManager {
-    public static void checkPermission(Context context){
+    public static void checkPermission(Context context, String... permissions){
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
@@ -28,7 +27,7 @@ public class PermissionManager {
 
         new TedPermission(context)
                 .setPermissionListener(permissionlistener)
-                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .setPermissions(permissions)
                 .check();
     }
 }

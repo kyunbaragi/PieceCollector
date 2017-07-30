@@ -11,6 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resValue "string", "google_maps_key", (project.findProperty("GOOGLE_MAPS_API_KEY") ?: "")
+        resValue "string", "kakao_app_key", (project.findProperty("KAKAO_APP_KEY") ?: "")
     }
     buildTypes {
         release {
@@ -39,4 +40,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:11.0.2'
     compile 'com.google.android.gms:play-services-places:11.0.2'
     compile 'gun0912.ted:tedpermission:1.0.3'
+    compile group: 'com.kakao.sdk', name: 'usermgmt', version: project.KAKAO_SDK_VERSION
 }

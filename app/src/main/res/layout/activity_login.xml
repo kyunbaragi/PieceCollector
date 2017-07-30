@@ -46,7 +46,7 @@
         android:layout_weight="2">
 
         <ImageView
-            android:id="@+id/login_kakao_icon"
+            android:id="@+id/btn_login_kakao"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginTop="12dp"
@@ -56,24 +56,24 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/login_facebook_icon"
+            android:id="@+id/btn_login_facebook"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="12dp"
             android:src="@drawable/ic_facebook"
-            app:layout_constraintRight_toLeftOf="@+id/login_kakao_icon"
+            app:layout_constraintRight_toLeftOf="@+id/btn_login_kakao"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/login_naver_icon"
+            android:id="@+id/btn_login_naver"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="12dp"
-            android:layout_toRightOf="@id/login_kakao_icon"
+            android:layout_toRightOf="@id/btn_login_kakao"
             android:src="@drawable/ic_naver"
-            app:layout_constraintLeft_toRightOf="@+id/login_kakao_icon"
+            app:layout_constraintLeft_toRightOf="@+id/btn_login_kakao"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -86,7 +86,7 @@
             android:textSize="10sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_kakao_icon" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_kakao" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -95,9 +95,9 @@
             android:text="네이버"
             android:textColor="@color/SecondaryTextBlack"
             android:textSize="10sp"
-            app:layout_constraintLeft_toLeftOf="@+id/login_naver_icon"
-            app:layout_constraintRight_toRightOf="@+id/login_naver_icon"
-            app:layout_constraintTop_toBottomOf="@+id/login_naver_icon" />
+            app:layout_constraintLeft_toLeftOf="@+id/btn_login_naver"
+            app:layout_constraintRight_toRightOf="@+id/btn_login_naver"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_naver" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -106,9 +106,9 @@
             android:text="페이스북"
             android:textColor="@color/SecondaryTextBlack"
             android:textSize="10sp"
-            app:layout_constraintLeft_toLeftOf="@+id/login_facebook_icon"
-            app:layout_constraintRight_toRightOf="@+id/login_facebook_icon"
-            app:layout_constraintTop_toBottomOf="@+id/login_facebook_icon" />
+            app:layout_constraintLeft_toLeftOf="@+id/btn_login_facebook"
+            app:layout_constraintRight_toRightOf="@+id/btn_login_facebook"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_facebook" />
 
     </android.support.constraint.ConstraintLayout>
 
