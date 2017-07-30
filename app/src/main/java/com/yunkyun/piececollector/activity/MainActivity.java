@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.yunkyun.piececollector.PermissionManager;
 import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.fragment.BadgeFragment;
 import com.yunkyun.piececollector.fragment.HistoryFragment;
@@ -27,6 +28,8 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    public static final String TAG = "MainActivity";
+    public static final int MAX_FRAGMENT_STACK_SIZE = 2;
     @BindView(R.id.toolbar_main)
     Toolbar toolbar;
     @BindView(R.id.drawer_layout)
@@ -51,7 +54,12 @@ public class MainActivity extends BaseActivity
         setToolbar();
         setDrawer();
         setFinishToast();
+        setFragmentManager();
 
+        PermissionManager.checkPermission(this);
+    }
+
+    private void setFragmentManager() {
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, new MainFragment(), MainFragment.TAG);
@@ -60,7 +68,7 @@ public class MainActivity extends BaseActivity
         fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
-                if(fragmentManager.getBackStackEntryCount() == 0){
+                if (fragmentManager.getBackStackEntryCount() == 0) {
                     mapButton.show();
                 } else {
                     mapButton.hide();
@@ -135,16 +143,13 @@ public class MainActivity extends BaseActivity
         }
 
         Fragment nextFragment = null;
-        switch (id) {
-            case R.id.nav_history:
-                nextFragment = new HistoryFragment();
-                break;
-            case R.id.nav_badge:
-                nextFragment = new BadgeFragment();
-                break;
+        if (id == R.id.nav_history) {
+            nextFragment = new HistoryFragment();
+        } else if (id == R.id.nav_badge) {
+            nextFragment = new BadgeFragment();
         }
 
-        if (fragmentManager.getBackStackEntryCount() <= 1) {
+        if (fragmentManager.getBackStackEntryCount() < MAX_FRAGMENT_STACK_SIZE) {
             fragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                     .replace(R.id.fragment_container, nextFragment, nextTag)

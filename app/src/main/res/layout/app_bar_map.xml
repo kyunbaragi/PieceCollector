@@ -49,13 +49,48 @@
 
     <include layout="@layout/content_map" />
 
+    <!--<RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="end" >
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_zoom_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_zoom_out"
+            android:layout_marginBottom="10dp"
+            app:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_zoom_in" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_zoom_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fab_camera"
+            android:layout_marginBottom="10dp"
+            android:layout_alignBaseline="@+id/fab_camera"
+            app:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_zoom_out" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:backgroundTint="@color/colorAccent"
+            android:src="@drawable/ic_camera" />
+
+    </RelativeLayout>-->
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/colorMyPrimary"
+        app:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_camera" />
 
 </android.support.design.widget.CoordinatorLayout>
