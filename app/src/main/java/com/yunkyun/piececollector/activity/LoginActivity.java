@@ -1,13 +1,16 @@
 package com.yunkyun.piececollector.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.kakao.auth.AuthType;
-import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
@@ -17,6 +20,7 @@ import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.yunkyun.piececollector.R;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -25,13 +29,28 @@ import butterknife.OnClick;
  */
 
 public class LoginActivity extends BaseActivity {
-    public static final String TAG = "LoginActivity";
+    private static final String TAG = "LoginActivity";
     private SessionCallback callback;
+
+    @BindView(R.id.iv_login_logo)
+    ImageView appLogo;
+    @BindView(R.id.btn_login_naver)
+    ImageView iconNaver;
+    @BindView(R.id.btn_login_kakao)
+    ImageView iconKakao;
+    @BindView(R.id.btn_login_facebook)
+    ImageView iconFacebook;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        Glide.with(this).load(R.drawable.logo_vertical).into(appLogo);
+        Glide.with(this).load(R.drawable.ic_naver).into(iconNaver);
+        Glide.with(this).load(R.drawable.ic_kakao).into(iconKakao);
+        Glide.with(this).load(R.drawable.ic_facebook).into(iconFacebook);
     }
 
     @OnClick({R.id.btn_login_kakao, R.id.btn_login_facebook, R.id.btn_login_naver})
@@ -53,61 +72,45 @@ public class LoginActivity extends BaseActivity {
     private void openLoginSession(){
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
-        Session.getCurrentSession().open(AuthType.KAKAO_TALK, LoginActivity.this);
-    }
-
-
-    private class SessionCallback implements ISessionCallback {
-        @Override
-        public void onSessionOpened() {
-            requestUserInfo();
-        }
-
-        @Override
-        public void onSessionOpenFailed(KakaoException exception) {
-            if(exception != null) {
-                Log.d(TAG, "onSessionOpenFailed");
-            }
+        if(!Session.getCurrentSession().checkAndImplicitOpen()) {
+            Session.getCurrentSession().open(AuthType.KAKAO_TALK, LoginActivity.this);
         }
     }
 
-    private void requestUserInfo() {
+    private void saveUserPreference() {
         UserManagement.requestMe(new MeResponseCallback() {
             @Override
             public void onFailure(ErrorResult errorResult) {
-                ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
-                if (result == ErrorCode.CLIENT_ERROR_CODE) {
-                    finish();
-                } else {
-                    // TODO: Redirect current activity.
-                }
+                // TODO: Handle Request Error.
+                Log.d(TAG, "onFailure");
             }
 
             @Override
             public void onSessionClosed(ErrorResult errorResult) {
-
+                // TODO: Handle Request Error.
+                Log.d(TAG, "onSessionClosed");
             }
 
             @Override
             public void onNotSignedUp() {
-
+                // TODO: Handle Not Signup state.
+                Log.d(TAG, "onNotSignedUp");
             }
 
             @Override
             public void onSuccess(UserProfile userProfile) {
-                openMainActivity(userProfile);
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putLong("user_id", userProfile.getId());
+                editor.putString("user_email", userProfile.getEmail());
+                editor.putString("user_nickname", userProfile.getNickname());
+                editor.putString("user_profile_image_path", userProfile.getProfileImagePath());
+                editor.commit();
             }
         });
     }
 
-    private void openMainActivity(UserProfile userProfile) {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.putExtra(TAG, userProfile);
-        startActivity(intent);
-        finish();
-    }
-
-    // 카카오톡 자동 로그인시 호출, 오버라이드 하지않으면 자동 로그인시 로그인 성공 화면으로 넘어가지 않음
+    // 최초 카카오톡 가입화면 후 호출, 오버라이드 하지않으면 로그인 성공 후 다음 화면으로 넘어가지 않음
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
@@ -120,5 +123,24 @@ public class LoginActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         Session.getCurrentSession().removeCallback(callback);
+    }
+
+    private class SessionCallback implements ISessionCallback {
+        @Override
+        public void onSessionOpened() {
+            saveUserPreference();
+
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+            startActivity(intent);
+            finish();
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+            if(exception != null) {
+                Log.d(TAG, "onSessionOpenFailed");
+            }
+        }
     }
 }
