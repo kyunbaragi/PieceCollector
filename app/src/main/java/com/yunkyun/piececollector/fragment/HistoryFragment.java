@@ -18,6 +18,11 @@ import butterknife.ButterKnife;
 public class HistoryFragment extends Fragment {
     public static final String TAG = "HistoryFragment";
 
+    public static HistoryFragment newInstance() {
+        HistoryFragment fragment = new HistoryFragment();
+        return fragment;
+    }
+
     public HistoryFragment() {
         // Required empty public constructor.
     }

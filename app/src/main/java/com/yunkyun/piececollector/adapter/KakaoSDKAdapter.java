@@ -1,4 +1,4 @@
-package com.yunkyun.piececollector;
+package com.yunkyun.piececollector.adapter;
 
 import android.content.Context;
 
@@ -7,6 +7,7 @@ import com.kakao.auth.AuthType;
 import com.kakao.auth.IApplicationConfig;
 import com.kakao.auth.ISessionConfig;
 import com.kakao.auth.KakaoAdapter;
+import com.yunkyun.piececollector.CustomApplication;
 
 /**
  * Created by YunKyun on 2017-07-30.

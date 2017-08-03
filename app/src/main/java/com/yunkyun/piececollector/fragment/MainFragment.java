@@ -25,6 +25,11 @@ public class MainFragment extends Fragment {
     RecyclerView recyclerView;
     private RecyclerAdapter adapter;
 
+    public static MainFragment newInstance() {
+        MainFragment fragment = new MainFragment();
+        return fragment;
+    }
+
     public MainFragment() {
         // Required empty public constructor.
     }

@@ -63,7 +63,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="4dp"
             android:src="@drawable/ic_camera"
-            app:backgroundTint="@color/colorMyPrimaryDark" />
+            app:backgroundTint="@color/colorAccent" />
 
     </RelativeLayout>
 

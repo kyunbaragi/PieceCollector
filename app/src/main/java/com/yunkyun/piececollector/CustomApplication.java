@@ -5,6 +5,7 @@ import android.app.Application;
 
 import com.kakao.auth.KakaoSDK;
 import com.tsengvn.typekit.Typekit;
+import com.yunkyun.piececollector.adapter.KakaoSDKAdapter;
 
 /**
  * Created by YunKyun on 2017-07-28.
@@ -23,8 +24,8 @@ public class CustomApplication extends Application {
 
         // Typekit Custom Font settings.
         Typekit.getInstance()
-                .addNormal(Typekit.createFromAsset(this, "fonts/NanumBarunGothic.ttf"))
-                .addBold(Typekit.createFromAsset(this, "fonts/NanumBarunGothicBold.ttf"));
+                .addNormal(Typekit.createFromAsset(this, "fonts/NanumSquareR.ttf"))
+                .addBold(Typekit.createFromAsset(this, "fonts/NanumSquareB.ttf"));
     }
 
     public static Activity getCurrentActivity() {

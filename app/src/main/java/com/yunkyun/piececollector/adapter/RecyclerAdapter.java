@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.yunkyun.piececollector.PlaceItem;
+import com.yunkyun.piececollector.object.Place;
 import com.yunkyun.piececollector.R;
 
 import java.util.ArrayList;
@@ -23,19 +23,19 @@ import butterknife.ButterKnife;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private Context context;
-    private List<PlaceItem> placeList;
+    private List<Place> placeList;
 
     public RecyclerAdapter(Context context) {
         this.context = context;
         placeList = new ArrayList<>();
-        placeList.add(new PlaceItem());
+        placeList.add(new Place());
     }
 
-    public void setPlaceList(List<PlaceItem> placeList) {
+    public void setPlaceList(List<Place> placeList) {
         this.placeList = placeList;
     }
 
-    public void addPlaceList(PlaceItem place) {
+    public void addPlaceList(Place place) {
         placeList.add(place);
     }
 
@@ -47,7 +47,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        PlaceItem place = placeList.get(position);
+        Place place = placeList.get(position);
         holder.image.setOnClickListener(new View.OnClickListener(){
             // TODO: Start PlaceActivity.
             @Override

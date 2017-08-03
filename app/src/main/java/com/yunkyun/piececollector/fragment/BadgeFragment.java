@@ -17,6 +17,12 @@ import butterknife.ButterKnife;
 
 public class BadgeFragment extends Fragment {
     public static final String TAG = "BadgeFragment";
+
+    public static BadgeFragment newInstance() {
+        BadgeFragment fragment = new BadgeFragment();
+        return fragment;
+    }
+
     public BadgeFragment() {
         // Required empty public constructor.
     }

@@ -19,10 +19,15 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.yunkyun.piececollector.R;
+import com.yunkyun.piececollector.network.NetworkService;
+import com.yunkyun.piececollector.object.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by YunKyun on 2017-07-27.
@@ -77,7 +82,7 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private void saveUserPreference() {
+    private void saveUserData() {
         UserManagement.requestMe(new MeResponseCallback() {
             @Override
             public void onFailure(ErrorResult errorResult) {
@@ -106,6 +111,25 @@ public class LoginActivity extends BaseActivity {
                 editor.putString("user_nickname", userProfile.getNickname());
                 editor.putString("user_profile_image_path", userProfile.getProfileImagePath());
                 editor.commit();
+
+                saveUserOnServer(userProfile);
+            }
+        });
+    }
+
+    private void saveUserOnServer(UserProfile userProfile) {
+        NetworkService service = NetworkService.retrofit.create(NetworkService.class);
+        User user = new User(userProfile.getId(), userProfile.getEmail());
+        Call<User> call = service.addUser(user);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                //response.message();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
             }
         });
     }
@@ -128,7 +152,7 @@ public class LoginActivity extends BaseActivity {
     private class SessionCallback implements ISessionCallback {
         @Override
         public void onSessionOpened() {
-            saveUserPreference();
+            saveUserData();
 
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);

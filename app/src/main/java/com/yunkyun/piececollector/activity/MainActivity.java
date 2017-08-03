@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -21,19 +23,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.yunkyun.piececollector.PermissionManager;
 import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.fragment.BadgeFragment;
 import com.yunkyun.piececollector.fragment.HistoryFragment;
 import com.yunkyun.piececollector.fragment.MainFragment;
+import com.yunkyun.piececollector.util.PermissionManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity {
     public static final String TAG = "MainActivity";
     private static final int FINISH_MAIN_ACTIVITY = -1;
     private static final int MAX_FRAGMENT_STACK_SIZE = 2;
@@ -45,6 +46,8 @@ public class MainActivity extends BaseActivity
     NavigationView navigationView;
     @BindView(R.id.fab_map)
     FloatingActionButton mapButton;
+    @BindView(R.id.bottom_navigation)
+    BottomNavigationView bottomNavigationView;
 
     private FragmentManager fragmentManager;
 
@@ -59,7 +62,7 @@ public class MainActivity extends BaseActivity
         ButterKnife.bind(this);
 
         setToolbar();
-        setDrawer();
+        setNavigationView();
         setFinishToast();
         setFragmentManager();
 
@@ -68,6 +71,8 @@ public class MainActivity extends BaseActivity
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+
     }
 
     @OnClick({R.id.fab_map, R.id.btn_menu})
@@ -78,14 +83,9 @@ public class MainActivity extends BaseActivity
                 drawer.openDrawer(GravityCompat.START);
                 break;
             case R.id.fab_map:
+
                 Intent intent = new Intent(MainActivity.this, MapActivity.class);
                 startActivity(intent);
-                /*UserManagement.requestLogout(new LogoutResponseCallback() {
-                    @Override
-                    public void onCompleteLogout() {
-                        Log.d(TAG, "onCompleteLogout");
-                    }
-                });*/
                 break;
             default:
                 break;
@@ -94,23 +94,24 @@ public class MainActivity extends BaseActivity
 
     private void setFragmentManager() {
         fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, new MainFragment(), MainFragment.TAG);
-        fragmentTransaction.commit();
-
-        fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-            @Override
-            public void onBackStackChanged() {
-                if (fragmentManager.getBackStackEntryCount() == 0) {
-                    mapButton.show();
-                } else {
-                    mapButton.hide();
-                }
-            }
-        });
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, MainFragment.newInstance(), MainFragment.TAG);
+        transaction.commit();
     }
 
-    private void setDrawer() {
+    private void changeFragment(Fragment nextFragment, String nextTag) {
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        if (nextTag.equals(currentFragment.getTag())) {
+            return;
+        }
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        transaction.replace(R.id.fragment_container, nextFragment, nextTag);
+        transaction.commit();
+    }
+
+    private void setNavigationView() {
         View header = navigationView.getHeaderView(0);
         CircleImageView profileImage = (CircleImageView) header.findViewById(R.id.iv_profile_image);
         TextView profileNickname = (TextView) header.findViewById(R.id.tv_profile_nickname);
@@ -120,42 +121,58 @@ public class MainActivity extends BaseActivity
         String email = sharedPreferences.getString("user_email", null);
         String profileImagePath = sharedPreferences.getString("user_profile_image_path", null);
 
-        if(profileImagePath != null) {
+        if (profileImagePath != null) {
             Glide.with(getApplicationContext()).load(profileImagePath).into(profileImage);
         }
         profileNickname.setText(nickname);
         profileEmail.setText(email);
 
-        navigationView.setNavigationItemSelectedListener(this);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment nextFragment = null;
+                String nextTag = "";
+                switch (item.getItemId()) {
+                    case R.id.bottom_nav_home:
+                        nextFragment = MainFragment.newInstance();
+                        nextTag = MainFragment.TAG;
+                        mapButton.show();
+                        break;
+                    case R.id.bottom_nav_history:
+                        nextFragment = HistoryFragment.newInstance();
+                        nextTag = HistoryFragment.TAG;
+                        mapButton.hide();
+                        break;
+                    case R.id.bottom_nav_badge:
+                        nextFragment = BadgeFragment.newInstance();
+                        nextTag = BadgeFragment.TAG;
+                        mapButton.hide();
+                        break;
+                }
+                changeFragment(nextFragment, nextTag);
+                return true;
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                switch (id) {
+                    case R.id.nav_home:
+                        break;
+                    case R.id.nav_setting:
+                        break;
+                }
+                drawer.closeDrawer(GravityCompat.START);
+                return false;
+            }
+        });
     }
 
     private void setToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
-
-    private void changeFragment(int id, String nextTag) {
-        String currentTag = fragmentManager.findFragmentById(R.id.fragment_container).getTag();
-        if (nextTag.equals(currentTag)) {
-            return;
-        }
-
-        Fragment nextFragment = null;
-        if (id == R.id.nav_history) {
-            nextFragment = new HistoryFragment();
-        } else if (id == R.id.nav_badge) {
-            nextFragment = new BadgeFragment();
-        }
-
-        if (fragmentManager.getBackStackEntryCount() < MAX_FRAGMENT_STACK_SIZE) {
-            fragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                    .replace(R.id.fragment_container, nextFragment, nextTag)
-                    .addToBackStack(null)
-                    .commit();
-        } else {
-            fragmentManager.popBackStack();
-        }
     }
 
     private void setFinishToast() {
@@ -177,30 +194,6 @@ public class MainActivity extends BaseActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.nav_home:
-                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                break;
-            case R.id.nav_history:
-                changeFragment(id, HistoryFragment.TAG);
-                break;
-            case R.id.nav_badge:
-                changeFragment(id, BadgeFragment.TAG);
-                break;
-            case R.id.nav_setting:
-                break;
-            default:
-                break;
-        }
-
-        drawer.closeDrawer(GravityCompat.START);
-
-        return false;
     }
 
     @Override

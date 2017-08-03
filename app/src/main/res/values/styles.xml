@@ -15,4 +15,9 @@
         <item name="color">@color/colorMyPrimary</item>
     </style>
 
+    <style name="NavigationViewStyle">
+        <item name="android:textSize">20sp</item><!-- text size in menu-->
+        <item name="android:listPreferredItemHeightSmall">40dp</item><!-- item size in menu-->
+    </style>
+
 </resources>
