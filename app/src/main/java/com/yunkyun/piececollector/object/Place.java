@@ -1,12 +1,14 @@
 package com.yunkyun.piececollector.object;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
+import com.google.maps.android.clustering.ClusterItem;
 
 /**
  * Created by YunKyun on 2017-07-29.
  */
 
-public class Place {
+public class Place implements ClusterItem {
     @SerializedName("_id")
     private int id;
     @SerializedName("title")
@@ -42,10 +44,6 @@ public class Place {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public void setTitle(String title) {
@@ -138,6 +136,20 @@ public class Place {
 
     public void setVisited(int visited) {
         this.visited = visited;
+    }
+
+    @Override
+    public LatLng getPosition() {
+        return new LatLng(latitude, longitude);
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public String getSnippet() {
+        return null;
     }
 
     @Override
