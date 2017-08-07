@@ -1,9 +1,7 @@
 package com.yunkyun.piececollector.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,12 +17,16 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.yunkyun.piececollector.R;
-import com.yunkyun.piececollector.network.NetworkService;
-import com.yunkyun.piececollector.object.User;
+import com.yunkyun.piececollector.call.NetworkService;
+import com.yunkyun.piececollector.util.PreferenceKey;
+import com.yunkyun.piececollector.util.SharedPreferencesService;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,10 +76,10 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private void openLoginSession(){
+    private void openLoginSession() {
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
-        if(!Session.getCurrentSession().checkAndImplicitOpen()) {
+        if (!Session.getCurrentSession().checkAndImplicitOpen()) {
             Session.getCurrentSession().open(AuthType.KAKAO_TALK, LoginActivity.this);
         }
     }
@@ -104,13 +106,10 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSuccess(UserProfile userProfile) {
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putLong("user_id", userProfile.getId());
-                editor.putString("user_email", userProfile.getEmail());
-                editor.putString("user_nickname", userProfile.getNickname());
-                editor.putString("user_profile_image_path", userProfile.getProfileImagePath());
-                editor.commit();
+                SharedPreferencesService.getInstance().setPrefData(PreferenceKey.USER_ID, userProfile.getId());
+                SharedPreferencesService.getInstance().setPrefData(PreferenceKey.USER_EMAIL, userProfile.getEmail());
+                SharedPreferencesService.getInstance().setPrefData(PreferenceKey.USER_NICKNAME, userProfile.getNickname());
+                SharedPreferencesService.getInstance().setPrefData(PreferenceKey.USER_PROFILE_IMAGE_PATH, userProfile.getProfileImagePath());
 
                 saveUserOnServer(userProfile);
             }
@@ -118,17 +117,22 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void saveUserOnServer(UserProfile userProfile) {
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("id", String.valueOf(userProfile.getId()));
+        parameters.put("email", userProfile.getEmail());
+
         NetworkService service = NetworkService.retrofit.create(NetworkService.class);
-        User user = new User(userProfile.getId(), userProfile.getEmail());
-        Call<User> call = service.addUser(user);
-        call.enqueue(new Callback<User>() {
+        Call call = service.createUser(parameters);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                //response.message();
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (!response.isSuccessful()) {
+                    // TODO: 서버접속 실패 시 처리
+                }
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
             }
         });
@@ -162,7 +166,7 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onSessionOpenFailed(KakaoException exception) {
-            if(exception != null) {
+            if (exception != null) {
                 Log.d(TAG, "onSessionOpenFailed");
             }
         }

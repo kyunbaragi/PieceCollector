@@ -2,10 +2,8 @@ package com.yunkyun.piececollector.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -14,9 +12,11 @@ import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.util.exception.KakaoException;
 import com.yunkyun.piececollector.R;
+import com.yunkyun.piececollector.call.NetworkService;
 import com.yunkyun.piececollector.dao.PlaceDAO;
-import com.yunkyun.piececollector.network.NetworkService;
 import com.yunkyun.piececollector.object.Place;
+import com.yunkyun.piececollector.util.PreferenceKey;
+import com.yunkyun.piececollector.util.SharedPreferencesService;
 
 import java.util.List;
 
@@ -51,10 +51,8 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                long userID = sharedPreferences.getLong("user_id", Long.MAX_VALUE);
-
-                if (userID == Long.MAX_VALUE) {
+                long userID = SharedPreferencesService.getInstance().getData(PreferenceKey.USER_ID);
+                if (userID == 0) {
                     overridePendingTransition(0, android.R.anim.fade_out);
                     startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     finish();
@@ -68,14 +66,11 @@ public class SplashActivity extends Activity {
     }
 
     private void syncDatabase() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final String clientVersion = sharedPreferences.getString("db_version", null);
+        final String clientVersion = SharedPreferencesService.getInstance().getData(PreferenceKey.DB_VERSION);
         final NetworkService service = NetworkService.retrofit.create(NetworkService.class);
 
-        if (clientVersion == null) {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("db_version", getResources().getString(R.string.db_version));
-            editor.commit();
+        if (clientVersion.isEmpty()) {
+            SharedPreferencesService.getInstance().setPrefData(PreferenceKey.DB_VERSION, "1.0");
             updateDatabase(service);
         } else {
             Call<String> call = service.getVersion("places");
@@ -93,7 +88,6 @@ public class SplashActivity extends Activity {
                     Log.e(TAG, "onFailure in syncDatabase()");
                 }
             });
-
         }
     }
 

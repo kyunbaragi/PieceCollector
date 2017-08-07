@@ -37,7 +37,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends BaseActivity {
     public static final String TAG = "MainActivity";
     private static final int FINISH_MAIN_ACTIVITY = -1;
-    private static final int MAX_FRAGMENT_STACK_SIZE = 2;
     @BindView(R.id.toolbar_main)
     Toolbar toolbar;
     @BindView(R.id.drawer_layout)
@@ -71,8 +70,6 @@ public class MainActivity extends BaseActivity {
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-
     }
 
     @OnClick({R.id.fab_map, R.id.btn_menu})
@@ -83,7 +80,6 @@ public class MainActivity extends BaseActivity {
                 drawer.openDrawer(GravityCompat.START);
                 break;
             case R.id.fab_map:
-
                 Intent intent = new Intent(MainActivity.this, MapActivity.class);
                 startActivity(intent);
                 break;

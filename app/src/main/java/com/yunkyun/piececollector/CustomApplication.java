@@ -6,6 +6,7 @@ import android.app.Application;
 import com.kakao.auth.KakaoSDK;
 import com.tsengvn.typekit.Typekit;
 import com.yunkyun.piececollector.adapter.KakaoSDKAdapter;
+import com.yunkyun.piececollector.util.SharedPreferencesService;
 
 /**
  * Created by YunKyun on 2017-07-28.
@@ -26,6 +27,8 @@ public class CustomApplication extends Application {
         Typekit.getInstance()
                 .addNormal(Typekit.createFromAsset(this, "fonts/NanumSquareR.ttf"))
                 .addBold(Typekit.createFromAsset(this, "fonts/NanumSquareB.ttf"));
+
+        SharedPreferencesService.getInstance().load(getApplicationContext());
     }
 
     public static Activity getCurrentActivity() {

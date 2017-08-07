@@ -48,4 +48,6 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.google.maps.android:android-maps-utils:0.5'
     compile 'com.google.android.gms:play-services-location:11.0.2'
+    compile 'com.tapadoo.android:alerter:2.0.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/marker_layout"
+    android:id="@+id/user_position_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/iv_marker"
-        android:layout_width="18dp"
-        android:layout_height="27dp"
-        android:background="@drawable/marker_bluish_green" />
+        android:id="@+id/iv_user_position"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/ic_user_position" />
 
 </FrameLayout>

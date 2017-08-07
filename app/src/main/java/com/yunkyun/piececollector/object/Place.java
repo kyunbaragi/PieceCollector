@@ -10,7 +10,7 @@ import com.google.maps.android.clustering.ClusterItem;
 
 public class Place implements ClusterItem {
     @SerializedName("_id")
-    private int id;
+    private Long id;
     @SerializedName("title")
     private String title;
     @SerializedName("latitude")
@@ -38,11 +38,11 @@ public class Place implements ClusterItem {
     public Place() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
