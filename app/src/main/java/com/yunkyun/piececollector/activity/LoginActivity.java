@@ -122,7 +122,7 @@ public class LoginActivity extends BaseActivity {
         parameters.put("email", userProfile.getEmail());
 
         NetworkService service = NetworkService.retrofit.create(NetworkService.class);
-        Call call = service.createUser(parameters);
+        Call<ResponseBody> call = service.createUser(parameters);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

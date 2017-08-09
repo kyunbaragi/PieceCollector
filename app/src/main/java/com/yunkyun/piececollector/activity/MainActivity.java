@@ -2,54 +2,53 @@ package com.yunkyun.piececollector.activity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.fragment.BadgeFragment;
 import com.yunkyun.piececollector.fragment.HistoryFragment;
 import com.yunkyun.piececollector.fragment.MainFragment;
+import com.yunkyun.piececollector.fragment.ProfileFragment;
 import com.yunkyun.piececollector.util.PermissionManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends BaseActivity {
-    public static final String TAG = "MainActivity";
-    private static final int FINISH_MAIN_ACTIVITY = -1;
-    @BindView(R.id.toolbar_main)
-    Toolbar toolbar;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawer;
-    @BindView(R.id.nav_view)
-    NavigationView navigationView;
+    @BindView(R.id.iv_home)
+    ImageView btnHomeImage;
+    @BindView(R.id.iv_history)
+    ImageView btnHistoryImage;
+    @BindView(R.id.iv_collection)
+    ImageView btnCollectionImage;
+    @BindView(R.id.iv_profile)
+    ImageView btnProfileImage;
+    @BindView(R.id.tv_home)
+    TextView btnHomeText;
+    @BindView(R.id.tv_history)
+    TextView btnHistoryText;
+    @BindView(R.id.tv_collection)
+    TextView btnCollectionText;
+    @BindView(R.id.tv_profile)
+    TextView btnProfileText;
     @BindView(R.id.fab_map)
     FloatingActionButton mapButton;
-    @BindView(R.id.bottom_navigation)
-    BottomNavigationView bottomNavigationView;
 
+    public static final String TAG = "MainActivity";
+    private static final int FINISH_MAIN_ACTIVITY = 0;
     private FragmentManager fragmentManager;
-
     private boolean finishFlag;
     private Toast finishToast;
     private Handler handler;
@@ -60,8 +59,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        setToolbar();
-        setNavigationView();
         setFinishToast();
         setFragmentManager();
 
@@ -72,20 +69,86 @@ public class MainActivity extends BaseActivity {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
-    @OnClick({R.id.fab_map, R.id.btn_menu})
-    void onButtonClick(View view) {
-        int id = view.getId();
-        switch (id) {
-            case R.id.btn_menu:
-                drawer.openDrawer(GravityCompat.START);
+    @OnClick({R.id.btn_nav_home, R.id.btn_nav_history, R.id.btn_nav_collection, R.id.btn_nav_profile})
+    void onNavigationButtonClick(View view) {
+        Fragment nextFragment = null;
+        String nextTag = "";
+
+        switch (view.getId()) {
+            case R.id.btn_nav_home:
+                nextFragment = MainFragment.newInstance();
+                nextTag = MainFragment.TAG;
+                mapButton.show();
                 break;
-            case R.id.fab_map:
-                Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                startActivity(intent);
+            case R.id.btn_nav_history:
+                nextFragment = HistoryFragment.newInstance();
+                nextTag = HistoryFragment.TAG;
+                mapButton.hide();
                 break;
-            default:
+            case R.id.btn_nav_collection:
+                nextFragment = BadgeFragment.newInstance();
+                nextTag = BadgeFragment.TAG;
+                mapButton.hide();
+                break;
+            case R.id.btn_nav_profile:
+                nextFragment = ProfileFragment.newInstance();
+                nextTag = ProfileFragment.TAG;
+                mapButton.hide();
                 break;
         }
+        changeButtonResource(view.getId());
+        changeFragment(nextFragment, nextTag);
+    }
+
+    private void changeButtonResource(int id) {
+        switch (id) {
+            case R.id.btn_nav_home:
+                btnHomeImage.setImageResource(R.drawable.ic_home_clicked);
+                btnHistoryImage.setImageResource(R.drawable.ic_history);
+                btnCollectionImage.setImageResource(R.drawable.ic_collection);
+                btnProfileImage.setImageResource(R.drawable.ic_profile);
+                btnHomeText.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+                btnHistoryText.setTextColor(ContextCompat.getColor(this, R.color.HintTextBlack));
+                btnCollectionText.setTextColor(ContextCompat.getColor(this, R.color.HintTextBlack));
+                btnProfileText.setTextColor(ContextCompat.getColor(this, R.color.HintTextBlack));
+                break;
+            case R.id.btn_nav_history:
+                btnHomeImage.setImageResource(R.drawable.ic_home);
+                btnHistoryImage.setImageResource(R.drawable.ic_history_clicked);
+                btnCollectionImage.setImageResource(R.drawable.ic_collection);
+                btnProfileImage.setImageResource(R.drawable.ic_profile);
+                btnHomeText.setTextColor(ContextCompat.getColor(this, R.color.HintTextBlack));
+                btnHistoryText.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+                btnCollectionText.setTextColor(ContextCompat.getColor(this, R.color.HintTextBlack));
+                btnProfileText.setTextColor(ContextCompat.getColor(this, R.color.HintTextBlack));
+                break;
+            case R.id.btn_nav_collection:
+                btnHomeImage.setImageResource(R.drawable.ic_home);
+                btnHistoryImage.setImageResource(R.drawable.ic_history);
+                btnCollectionImage.setImageResource(R.drawable.ic_collection_clicked);
+                btnProfileImage.setImageResource(R.drawable.ic_profile);
+                btnHomeText.setTextColor(ContextCompat.getColor(this, R.color.HintTextBlack));
+                btnHistoryText.setTextColor(ContextCompat.getColor(this, R.color.HintTextBlack));
+                btnCollectionText.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+                btnProfileText.setTextColor(ContextCompat.getColor(this, R.color.HintTextBlack));
+                break;
+            case R.id.btn_nav_profile:
+                btnHomeImage.setImageResource(R.drawable.ic_home);
+                btnHistoryImage.setImageResource(R.drawable.ic_history);
+                btnCollectionImage.setImageResource(R.drawable.ic_collection);
+                btnProfileImage.setImageResource(R.drawable.ic_profile_clicked);
+                btnHomeText.setTextColor(ContextCompat.getColor(this, R.color.HintTextBlack));
+                btnHistoryText.setTextColor(ContextCompat.getColor(this, R.color.HintTextBlack));
+                btnCollectionText.setTextColor(ContextCompat.getColor(this, R.color.HintTextBlack));
+                btnProfileText.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+                break;
+        }
+    }
+
+    @OnClick(R.id.fab_map)
+    void onFloatingActionButtionClick(View view) {
+        Intent intent = new Intent(MainActivity.this, MapActivity.class);
+        startActivity(intent);
     }
 
     private void setFragmentManager() {
@@ -107,70 +170,6 @@ public class MainActivity extends BaseActivity {
         transaction.commit();
     }
 
-    private void setNavigationView() {
-        View header = navigationView.getHeaderView(0);
-        CircleImageView profileImage = (CircleImageView) header.findViewById(R.id.iv_profile_image);
-        TextView profileNickname = (TextView) header.findViewById(R.id.tv_profile_nickname);
-        TextView profileEmail = (TextView) header.findViewById(R.id.tv_profile_email);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String nickname = sharedPreferences.getString("user_nickname", null);
-        String email = sharedPreferences.getString("user_email", null);
-        String profileImagePath = sharedPreferences.getString("user_profile_image_path", null);
-
-        if (profileImagePath != null) {
-            Glide.with(getApplicationContext()).load(profileImagePath).into(profileImage);
-        }
-        profileNickname.setText(nickname);
-        profileEmail.setText(email);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment nextFragment = null;
-                String nextTag = "";
-                switch (item.getItemId()) {
-                    case R.id.bottom_nav_home:
-                        nextFragment = MainFragment.newInstance();
-                        nextTag = MainFragment.TAG;
-                        mapButton.show();
-                        break;
-                    case R.id.bottom_nav_history:
-                        nextFragment = HistoryFragment.newInstance();
-                        nextTag = HistoryFragment.TAG;
-                        mapButton.hide();
-                        break;
-                    case R.id.bottom_nav_badge:
-                        nextFragment = BadgeFragment.newInstance();
-                        nextTag = BadgeFragment.TAG;
-                        mapButton.hide();
-                        break;
-                }
-                changeFragment(nextFragment, nextTag);
-                return true;
-            }
-        });
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch (id) {
-                    case R.id.nav_home:
-                        break;
-                    case R.id.nav_setting:
-                        break;
-                }
-                drawer.closeDrawer(GravityCompat.START);
-                return false;
-            }
-        });
-    }
-
-    private void setToolbar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
-
     private void setFinishToast() {
         finishToast = Toast.makeText(this, "한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
         handler = new Handler() {
@@ -181,15 +180,6 @@ public class MainActivity extends BaseActivity {
                 }
             }
         };
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     @Override

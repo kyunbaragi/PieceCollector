@@ -55,9 +55,9 @@ import com.yunkyun.piececollector.call.NetworkService;
 import com.yunkyun.piececollector.dao.PlaceDAO;
 import com.yunkyun.piececollector.object.Place;
 import com.yunkyun.piececollector.util.AlerterMaker;
+import com.yunkyun.piececollector.util.AppPreferenceKey;
 import com.yunkyun.piececollector.util.MyMath;
 import com.yunkyun.piececollector.util.PermissionManager;
-import com.yunkyun.piececollector.util.PreferenceKey;
 import com.yunkyun.piececollector.util.SharedPreferencesService;
 
 import java.io.File;
@@ -163,6 +163,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         } else {
             map.clear();
             for (Place place : placeList) {
+                Log.e(TAG, place.toString());
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerView)));
                 markerOptions.position(new LatLng(place.getLatitude(), place.getLongitude()));
@@ -425,12 +426,12 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
 
         HashMap<String, String> parameters = new HashMap<>();
 
-        Long userID = SharedPreferencesService.getInstance().getData(PreferenceKey.USER_ID);
+        Long userID = SharedPreferencesService.getInstance().getPrefLongData(AppPreferenceKey.PREF_USER_ID_KEY);
 
         parameters.put("user_id", String.valueOf(userID));
         parameters.put("place_id", String.valueOf(place.getId()));
 
-        retrofit2.Call<okhttp3.ResponseBody> call = service.postImage(parameters, body);
+        Call<okhttp3.ResponseBody> call = service.postImage(parameters, body);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -491,12 +492,15 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
             TextView distanceUi = (TextView) view.findViewById(R.id.tv_place_distance);
 
             Place place = (Place) marker.getTag();
-            titleUi.setText(place.getTitle());
-            String placeLocation = String.format("위도: %.5f / 경도: %.5f", place.getLatitude(), place.getLongitude());
-            locationUi.setText(placeLocation);
-            double distance = MyMath.calDistance(place.getLatitude(), place.getLongitude(), currentLat, currentLng);
-            String placeDistance = String.format("%.2f km", distance);
-            distanceUi.setText(placeDistance);
+
+            if(place != null) {
+                titleUi.setText(place.getTitle());
+                String placeLocation = String.format("위도: %.5f / 경도: %.5f", place.getLatitude(), place.getLongitude());
+                locationUi.setText(placeLocation);
+                double distance = MyMath.calDistance(place.getLatitude(), place.getLongitude(), currentLat, currentLng);
+                String placeDistance = String.format("%.2f km", distance);
+                distanceUi.setText(placeDistance);
+            }
         }
     }
 }

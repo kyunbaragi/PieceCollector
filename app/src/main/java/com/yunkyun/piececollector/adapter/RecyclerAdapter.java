@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.yunkyun.piececollector.object.Place;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.yunkyun.piececollector.R;
+import com.yunkyun.piececollector.object.Record;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -23,32 +26,38 @@ import butterknife.ButterKnife;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private Context context;
-    private List<Place> placeList;
+    private List<Record> recordList;
 
     public RecyclerAdapter(Context context) {
         this.context = context;
-        placeList = new ArrayList<>();
-        placeList.add(new Place());
+        recordList = new ArrayList<>();
     }
 
-    public void setPlaceList(List<Place> placeList) {
-        this.placeList = placeList;
+    public void setRecordList(List<Record> placeList) {
+        this.recordList = placeList;
+        shuffleRecordList();
     }
 
-    public void addPlaceList(Place place) {
-        placeList.add(place);
+    public void shuffleRecordList() {
+        Collections.shuffle(recordList);
+    }
+
+    public void addRecordList(Record place) {
+        recordList.add(place);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_place, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_record, null);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        Place place = placeList.get(position);
-        holder.image.setOnClickListener(new View.OnClickListener(){
+        Record record = recordList.get(position);
+
+        Glide.with(context).load(record.getImagePath()).transition(DrawableTransitionOptions.withCrossFade(1500)).into(holder.image);
+        holder.image.setOnClickListener(new View.OnClickListener() {
             // TODO: Start PlaceActivity.
             @Override
             public void onClick(View view) {
@@ -59,11 +68,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return placeList.size();
+        return recordList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv_place_image) ImageView image;
+        @BindView(R.id.iv_place_image)
+        ImageView image;
 
         public ViewHolder(View itemView) {
             super(itemView);

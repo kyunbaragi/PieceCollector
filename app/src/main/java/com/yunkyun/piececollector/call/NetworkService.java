@@ -1,6 +1,7 @@
 package com.yunkyun.piececollector.call;
 
 import com.yunkyun.piececollector.object.Place;
+import com.yunkyun.piececollector.object.Record;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,13 +26,16 @@ public interface NetworkService {
     String serverURL = "http://128.199.209.152/";
 
     @POST("users/new")
-    Call createUser(@Body HashMap<String, String> parameters);
+    Call<okhttp3.ResponseBody> createUser(@Body HashMap<String, String> parameters);
 
     @GET("versions/{table}")
     Call<String> getVersion(@Path("table") String table);
 
     @GET("places")
     Call<List<Place>> getPlaces();
+
+    @POST("records")
+    Call<List<Record>> getRecords(@Body HashMap<String, String> parameters);
 
     @Multipart
     @POST("upload")

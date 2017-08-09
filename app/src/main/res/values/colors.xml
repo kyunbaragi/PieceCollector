@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#424242</color>
-    <color name="colorPrimaryDark">#212121</color>
+    <color name="colorPrimaryDark">#E81751</color>
     <color name="colorAccent">#E81751</color>
+    <!--<color name="colorPrimary">#424242</color>
+    <color name="colorPrimaryDark">#212121</color>
+    <color name="colorAccent">#E81751</color>-->
 
     <color name="alarmDefault">#424242</color>
     <color name="alarmFailure">#FF5252</color>

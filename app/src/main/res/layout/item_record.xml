@@ -10,14 +10,13 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_margin="6dp"
+        android:elevation="0dp"
         card_view:cardCornerRadius="8dp">
 
         <ImageView
             android:id="@+id/iv_place_image"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image2" />
+            android:layout_height="wrap_content" />
 
     </android.support.v7.widget.CardView>
 

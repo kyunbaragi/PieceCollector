@@ -9,20 +9,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.adapter.RecyclerAdapter;
+import com.yunkyun.piececollector.call.NetworkService;
+import com.yunkyun.piececollector.object.Record;
+import com.yunkyun.piececollector.util.AppPreferenceKey;
+import com.yunkyun.piececollector.util.SharedPreferencesService;
+
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by YunKyun on 2017-07-27.
  */
 
-public class MainFragment extends Fragment {
-    public static final String TAG = "MainFragment";
+public class MainFragment extends Fragment implements RecyclerRefreshLayout.OnRefreshListener {
     @BindView(R.id.rv_main)
     RecyclerView recyclerView;
+    @BindView(R.id.swipe_layout)
+    RecyclerRefreshLayout swipeRefreshLayout;
+
+    public static final String TAG = "MainFragment";
     private RecyclerAdapter adapter;
 
     public static MainFragment newInstance() {
@@ -38,6 +52,24 @@ public class MainFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: Load User data from server.
+        NetworkService service = NetworkService.retrofit.create(NetworkService.class);
+
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("id", String.valueOf(SharedPreferencesService.getInstance().getPrefLongData(AppPreferenceKey.PREF_USER_ID_KEY)));
+
+        Call<List<Record>> call = service.getRecords(parameters);
+        call.enqueue(new Callback<List<Record>>() {
+            @Override
+            public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {
+                List<Record> recordList = response.body();
+                setContents(recordList);
+            }
+
+            @Override
+            public void onFailure(Call<List<Record>> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
@@ -46,7 +78,10 @@ public class MainFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         setRecyclerView();
-        setContents();
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setAnimateToRefreshDuration(1 * 1000);
+        swipeRefreshLayout.setRefreshStyle(RecyclerRefreshLayout.RefreshStyle.NORMAL);
 
         return view;
     }
@@ -60,9 +95,32 @@ public class MainFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void setContents() {
-
+    private void setContents(List<Record> recordList) {
+        adapter.setRecordList(recordList);
+        adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onRefresh() {
 
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("id", String.valueOf(SharedPreferencesService.getInstance().getPrefLongData(AppPreferenceKey.PREF_USER_ID_KEY)));
+        NetworkService service = NetworkService.retrofit.create(NetworkService.class);
+
+        Call<List<Record>> call = service.getRecords(parameters);
+        call.enqueue(new Callback<List<Record>>() {
+            @Override
+            public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {
+                List<Record> recordList = response.body();
+                setContents(recordList);
+            }
+
+            @Override
+            public void onFailure(Call<List<Record>> call, Throwable t) {
+
+            }
+        });
+
+        swipeRefreshLayout.setRefreshing(false);
+    }
 }

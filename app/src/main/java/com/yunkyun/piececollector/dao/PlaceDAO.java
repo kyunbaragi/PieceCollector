@@ -70,8 +70,7 @@ public class PlaceDAO extends SQLiteOpenHelper {
     }
 
     public void updatePlaceById(long id) {
-        String query = String.format("UPDATE %s SET %s = '1' WHERE %s = '%f'", TABLE_NAME, KEY_VISITED, KEY_ID, id);
-        //String query = "UPDATE " + TABLE_NAME + " SET " + KEY_VISITED + " = '1'" + " WHERE " + KEY_ID + " = '" + id + "'";
+        String query = String.format("UPDATE %s SET %s = '1' WHERE %s = '%d'", TABLE_NAME, KEY_VISITED, KEY_ID, id);
         SQLiteDatabase db = null;
         try {
             db = this.getReadableDatabase();

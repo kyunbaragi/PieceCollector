@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/White"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/iv_profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/logo_app"
+            app:civ_border_color="@color/Divider"
+            app:civ_border_width="1dp" />
+
+        <TextView
+            android:id="@+id/tv_profile_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_profile_image"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="15dp"
+            android:text="YunKyun Han"
+            android:textColor="@color/PrimaryTextBlack"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_profile_nickname"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="5dp"
+            android:text="kyunbaragi@daum.net"
+            android:textColor="@color/SecondaryTextBlack"
+            android:textSize="16dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:padding="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_modify_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_profile_item"
+            android:textAlignment="textStart"
+            android:text="프로필 수정" />
+
+        <Button
+            android:id="@+id/btn_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_profile_item"
+            android:textAlignment="textStart"
+            android:text="환경설정" />
+
+        <Button
+            android:id="@+id/btn_help"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_profile_item"
+            android:textAlignment="textStart"
+            android:text="도움말" />
+
+        <Button
+            android:id="@+id/btn_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/bg_profile_item"
+            android:textAlignment="textStart"
+            android:text="피드백 남기기" />
+    </LinearLayout>
+
+
+</LinearLayout>

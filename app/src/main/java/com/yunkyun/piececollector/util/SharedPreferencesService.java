@@ -2,6 +2,7 @@ package com.yunkyun.piececollector.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
@@ -49,7 +50,8 @@ public class SharedPreferencesService {
         } else if (Integer.class.equals(preferenceKey.getValueType())) {
             valueData = (T) getData(preferenceKey, 0);
         } else if (Long.class.equals(preferenceKey.getValueType())) {
-            valueData = (T) getData(preferenceKey, 0);
+            Log.e("TEST", "1111");
+            valueData = (T) getData(preferenceKey, 0L);
         } else if (Float.class.equals(preferenceKey.getValueType())) {
             valueData = (T) getData(preferenceKey, 0.f);
         } else if (String.class.equals(preferenceKey.getValueType())) {
@@ -63,6 +65,8 @@ public class SharedPreferencesService {
 
         Class<T> classType = preferenceKey.getValueType();
 
+        Log.e("TEST", classType.toString());
+
         Object value = null;
 
         if (Boolean.class.equals(preferenceKey.getValueType())) {
@@ -70,7 +74,9 @@ public class SharedPreferencesService {
         } else if (Integer.class.equals(preferenceKey.getValueType())) {
             value = getPrefIntegerData(preferenceKey.getKey(), (Integer) defaultData);
         } else if (Long.class.equals(preferenceKey.getValueType())) {
+            Log.e("TEST", "2222");
             value = getPrefLongData(preferenceKey.getKey(), (Long) defaultData);
+            Log.e("TEST value", value.toString());
         } else if (Float.class.equals(preferenceKey.getValueType())) {
             value = getPrefFloatData(preferenceKey.getKey(), (Float) defaultData);
         } else if (String.class.equals(preferenceKey.getValueType())) {
@@ -88,6 +94,8 @@ public class SharedPreferencesService {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
+
+        Log.e("TEST", valueData.toString());
 
         return valueData;
     }

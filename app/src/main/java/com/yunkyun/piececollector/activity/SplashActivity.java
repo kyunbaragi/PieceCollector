@@ -15,6 +15,7 @@ import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.call.NetworkService;
 import com.yunkyun.piececollector.dao.PlaceDAO;
 import com.yunkyun.piececollector.object.Place;
+import com.yunkyun.piececollector.util.AppPreferenceKey;
 import com.yunkyun.piececollector.util.PreferenceKey;
 import com.yunkyun.piececollector.util.SharedPreferencesService;
 
@@ -51,7 +52,7 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                long userID = SharedPreferencesService.getInstance().getData(PreferenceKey.USER_ID);
+                long userID = SharedPreferencesService.getInstance().getPrefLongData(AppPreferenceKey.PREF_USER_ID_KEY);
                 if (userID == 0) {
                     overridePendingTransition(0, android.R.anim.fade_out);
                     startActivity(new Intent(SplashActivity.this, LoginActivity.class));
@@ -66,7 +67,7 @@ public class SplashActivity extends Activity {
     }
 
     private void syncDatabase() {
-        final String clientVersion = SharedPreferencesService.getInstance().getData(PreferenceKey.DB_VERSION);
+        final String clientVersion = SharedPreferencesService.getInstance().getPrefStringData(AppPreferenceKey.PREF_DB_VERSION_KEY);
         final NetworkService service = NetworkService.retrofit.create(NetworkService.class);
 
         if (clientVersion.isEmpty()) {

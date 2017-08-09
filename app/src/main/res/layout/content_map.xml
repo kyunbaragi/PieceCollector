@@ -88,6 +88,7 @@
             android:layout_marginRight="@dimen/fab_margin"
             android:layout_marginTop="5dp"
             android:background="@drawable/bg_current_location"
+            android:elevation="4dp"
             android:padding="4dp"
             android:text="안녕하세요. 당신의 길잡이입니다."
             android:textAlignment="center"
