@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/White"
@@ -44,44 +45,51 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:padding="50dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="50dp">
 
         <Button
             android:id="@+id/btn_modify_profile"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@drawable/bg_profile_item"
+            android:text="프로필 수정"
             android:textAlignment="textStart"
-            android:text="프로필 수정" />
+            android:textColor="@color/PrimaryTextBlack"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_settings"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@drawable/bg_profile_item"
+            android:text="환경설정"
             android:textAlignment="textStart"
-            android:text="환경설정" />
+            android:textColor="@color/PrimaryTextBlack"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_help"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@drawable/bg_profile_item"
+            android:text="도움말"
             android:textAlignment="textStart"
-            android:text="도움말" />
+            android:textColor="@color/PrimaryTextBlack"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_feedback"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
+            android:layout_height="50dp"
             android:background="@drawable/bg_profile_item"
+            android:text="피드백 남기기"
             android:textAlignment="textStart"
-            android:text="피드백 남기기" />
+            android:textColor="@color/PrimaryTextBlack"
+            android:textSize="14sp" />
     </LinearLayout>
 
 

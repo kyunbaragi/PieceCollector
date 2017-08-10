@@ -10,7 +10,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_margin="6dp"
-        android:elevation="0dp"
+        card_view:cardElevation="0dp"
         card_view:cardCornerRadius="8dp">
 
         <ImageView

@@ -6,6 +6,7 @@
     android:layout_alignParentBottom="true"
     android:background="@color/White"
     android:orientation="horizontal"
+    android:elevation="16dp"
     tools:showIn="@layout/activity_main">
 
     <RelativeLayout

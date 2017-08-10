@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yunkyun.piececollector.R;
-import com.yunkyun.piececollector.fragment.BadgeFragment;
+import com.yunkyun.piececollector.fragment.CollectionFragment;
 import com.yunkyun.piececollector.fragment.HistoryFragment;
 import com.yunkyun.piececollector.fragment.MainFragment;
 import com.yunkyun.piececollector.fragment.ProfileFragment;
@@ -86,8 +86,8 @@ public class MainActivity extends BaseActivity {
                 mapButton.hide();
                 break;
             case R.id.btn_nav_collection:
-                nextFragment = BadgeFragment.newInstance();
-                nextTag = BadgeFragment.TAG;
+                nextFragment = CollectionFragment.newInstance();
+                nextTag = CollectionFragment.TAG;
                 mapButton.hide();
                 break;
             case R.id.btn_nav_profile:

@@ -16,11 +16,11 @@
 
     </FrameLayout>
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:layout_above="@+id/bottom_navigation"
-        android:background="@drawable/bg_shadow" />
+        android:background="@drawable/bg_shadow" />-->
 
     <include
         android:id="@+id/bottom_navigation"
@@ -33,6 +33,7 @@
         android:layout_above="@+id/bottom_navigation"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/fab_margin"
+        android:elevation="16dp"
         android:src="@drawable/ic_map"
         app:backgroundTint="@color/colorAccent" />
 

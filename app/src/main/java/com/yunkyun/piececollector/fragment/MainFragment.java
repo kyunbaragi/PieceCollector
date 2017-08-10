@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.yunkyun.piececollector.R;
-import com.yunkyun.piececollector.adapter.RecyclerAdapter;
+import com.yunkyun.piececollector.adapter.MainRecyclerAdapter;
 import com.yunkyun.piececollector.call.NetworkService;
 import com.yunkyun.piececollector.object.Record;
 import com.yunkyun.piececollector.util.AppPreferenceKey;
@@ -34,10 +34,10 @@ public class MainFragment extends Fragment implements RecyclerRefreshLayout.OnRe
     @BindView(R.id.rv_main)
     RecyclerView recyclerView;
     @BindView(R.id.swipe_layout)
-    RecyclerRefreshLayout swipeRefreshLayout;
+    RecyclerRefreshLayout refreshLayout;
 
     public static final String TAG = "MainFragment";
-    private RecyclerAdapter adapter;
+    private MainRecyclerAdapter adapter;
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -52,24 +52,7 @@ public class MainFragment extends Fragment implements RecyclerRefreshLayout.OnRe
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: Load User data from server.
-        NetworkService service = NetworkService.retrofit.create(NetworkService.class);
-
-        HashMap<String, String> parameters = new HashMap<>();
-        parameters.put("id", String.valueOf(SharedPreferencesService.getInstance().getPrefLongData(AppPreferenceKey.PREF_USER_ID_KEY)));
-
-        Call<List<Record>> call = service.getRecords(parameters);
-        call.enqueue(new Callback<List<Record>>() {
-            @Override
-            public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {
-                List<Record> recordList = response.body();
-                setContents(recordList);
-            }
-
-            @Override
-            public void onFailure(Call<List<Record>> call, Throwable t) {
-
-            }
-        });
+        loadRecordList();
     }
 
     @Override
@@ -78,10 +61,7 @@ public class MainFragment extends Fragment implements RecyclerRefreshLayout.OnRe
         ButterKnife.bind(this, view);
 
         setRecyclerView();
-
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setAnimateToRefreshDuration(1 * 1000);
-        swipeRefreshLayout.setRefreshStyle(RecyclerRefreshLayout.RefreshStyle.NORMAL);
+        setRefreshLayout();
 
         return view;
     }
@@ -91,8 +71,14 @@ public class MainFragment extends Fragment implements RecyclerRefreshLayout.OnRe
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        adapter = new RecyclerAdapter(getContext());
+        adapter = new MainRecyclerAdapter(getContext());
         recyclerView.setAdapter(adapter);
+    }
+
+    private void setRefreshLayout() {
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setAnimateToRefreshDuration(1 * 1000);
+        refreshLayout.setRefreshStyle(RecyclerRefreshLayout.RefreshStyle.NORMAL);
     }
 
     private void setContents(List<Record> recordList) {
@@ -102,7 +88,11 @@ public class MainFragment extends Fragment implements RecyclerRefreshLayout.OnRe
 
     @Override
     public void onRefresh() {
+        loadRecordList();
+        refreshLayout.setRefreshing(false);
+    }
 
+    private void loadRecordList() {
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("id", String.valueOf(SharedPreferencesService.getInstance().getPrefLongData(AppPreferenceKey.PREF_USER_ID_KEY)));
         NetworkService service = NetworkService.retrofit.create(NetworkService.class);
@@ -120,7 +110,5 @@ public class MainFragment extends Fragment implements RecyclerRefreshLayout.OnRe
 
             }
         });
-
-        swipeRefreshLayout.setRefreshing(false);
     }
 }

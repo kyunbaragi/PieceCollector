@@ -15,21 +15,21 @@ import butterknife.ButterKnife;
  * Created by YunKyun on 2017-07-27.
  */
 
-public class BadgeFragment extends Fragment {
-    public static final String TAG = "BadgeFragment";
+public class CollectionFragment extends Fragment {
+    public static final String TAG = "CollectionFragment";
 
-    public static BadgeFragment newInstance() {
-        BadgeFragment fragment = new BadgeFragment();
+    public static CollectionFragment newInstance() {
+        CollectionFragment fragment = new CollectionFragment();
         return fragment;
     }
 
-    public BadgeFragment() {
+    public CollectionFragment() {
         // Required empty public constructor.
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_badge, container, false);
+        View view = inflater.inflate(R.layout.fragment_collection, container, false);
         ButterKnife.bind(this, view);
 
         return view;
