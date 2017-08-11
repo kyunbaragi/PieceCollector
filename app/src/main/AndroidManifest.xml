@@ -68,7 +68,7 @@
             android:screenOrientation="portrait"></activity>
 
         <activity
-            android:name=".activity.PlaceActivity"
+            android:name=".activity.RecordActivity"
             android:screenOrientation="portrait"></activity>
 
     </application>

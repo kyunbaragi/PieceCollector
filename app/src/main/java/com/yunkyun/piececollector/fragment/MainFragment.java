@@ -102,6 +102,9 @@ public class MainFragment extends Fragment implements RecyclerRefreshLayout.OnRe
             @Override
             public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {
                 List<Record> recordList = response.body();
+                /*for(Record record : recordList){
+                    Log.e(TAG, record.toString());
+                }*/
                 setContents(recordList);
             }
 

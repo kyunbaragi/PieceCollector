@@ -30,6 +30,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -40,6 +42,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -95,13 +98,14 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
 
     private static final String TAG = "MapActivity";
     private static final int REQUEST_CHECK_SETTINGS = 0;
-    private static final int TAKE_PHOTO_FROM_CAMERA = 1;
+    private static final int REQUEST_TAKE_PHOTO = 1;
+    private static final int REQUEST_PLACE_AUTOCOMPLETE = 2;
     private static final float MIN_ZOOM = 14.0f;
     private static final float MAX_ZOOM = 18.0f;
     private static final double DEFAULT_LATITUDE = 37.5759880;
     private static final double DEFAULT_LONGITUDE = 126.9769230;
-    private static final double VALID_LATITUDE_RADIUS = 0.00045;
-    private static final double VALID_LONGITUDE_RADIUS = 0.00055;
+    private static final double VALID_LATITUDE_RADIUS = 0.00090;
+    private static final double VALID_LONGITUDE_RADIUS = 0.00110;
     private GoogleMap map;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
@@ -166,6 +170,13 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
                 Log.e(TAG, place.toString());
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerView)));
+                if(place.getId() <= 200000) {
+                    ImageView markerUI = (ImageView) markerView.findViewById(R.id.iv_marker);
+                    markerUI.setImageResource(R.drawable.marker_red);
+                } else {
+                    ImageView markerUI = (ImageView) markerView.findViewById(R.id.iv_marker);
+                    markerUI.setImageResource(R.drawable.marker_green);
+                }
                 markerOptions.position(new LatLng(place.getLatitude(), place.getLongitude()));
                 markerOptions.title(place.getTitle());
                 map.addMarker(markerOptions).setTag(place);
@@ -215,7 +226,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         }
     }
 
-    @OnClick({R.id.btn_my_location, R.id.btn_search_by_location, R.id.btn_back, R.id.fab_camera})
+    @OnClick({R.id.btn_my_location, R.id.btn_search_by_location, R.id.fab_camera, R.id.btn_search, R.id.btn_back})
     void onButtonClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -228,9 +239,25 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
             case R.id.fab_camera:
                 showCamera();
                 break;
+            case R.id.btn_search:
+                redirectPlaceAutoComplete();
+                break;
             case R.id.btn_back:
                 onBackPressed();
                 break;
+        }
+    }
+
+    private void redirectPlaceAutoComplete() {
+        try {
+            Intent intent =
+                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                            .build(this);
+            startActivityForResult(intent, REQUEST_PLACE_AUTOCOMPLETE);
+        } catch (GooglePlayServicesRepairableException e) {
+            // TODO: Handle the error.
+        } catch (GooglePlayServicesNotAvailableException e) {
+            // TODO: Handle the error.
         }
     }
 
@@ -238,7 +265,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         Uri uri = getFileUri();
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        startActivityForResult(intent, TAKE_PHOTO_FROM_CAMERA);
+        startActivityForResult(intent, REQUEST_TAKE_PHOTO);
     }
 
     private Uri getFileUri() {
@@ -375,8 +402,12 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
                     setLocationListener();
                     startLocationUpdate();
                     break;
-                case TAKE_PHOTO_FROM_CAMERA:
+                case REQUEST_TAKE_PHOTO:
                     checkMarkersOnMap();
+                    break;
+                case REQUEST_PLACE_AUTOCOMPLETE:
+                    com.google.android.gms.location.places.Place place = PlaceAutocomplete.getPlace(this, data);
+                    map.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
                     break;
             }
         }
@@ -493,7 +524,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
 
             Place place = (Place) marker.getTag();
 
-            if(place != null) {
+            if (place != null) {
                 titleUi.setText(place.getTitle());
                 String placeLocation = String.format("위도: %.5f / 경도: %.5f", place.getLatitude(), place.getLongitude());
                 locationUi.setText(placeLocation);

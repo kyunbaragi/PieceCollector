@@ -1,5 +1,7 @@
 package com.yunkyun.piececollector.call;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.yunkyun.piececollector.object.Place;
 import com.yunkyun.piececollector.object.Record;
 
@@ -41,8 +43,12 @@ public interface NetworkService {
     @POST("upload")
     retrofit2.Call<okhttp3.ResponseBody> postImage(@QueryMap HashMap<String, String> parameters, @Part MultipartBody.Part image);
 
+    Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:sss")
+            .create();
+
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(serverURL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 }

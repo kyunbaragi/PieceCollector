@@ -3,11 +3,15 @@ package com.yunkyun.piececollector.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.adapter.HistoryRecyclerAdapter;
@@ -32,9 +36,12 @@ import retrofit2.Response;
 public class HistoryFragment extends Fragment {
     @BindView(R.id.rv_history)
     RecyclerView recyclerView;
+    @BindView(R.id.et_search)
+    EditText searchBar;
 
     public static final String TAG = "HistoryFragment";
     private HistoryRecyclerAdapter adapter;
+    private SortedList.Callback<Object> callback;
 
     public static HistoryFragment newInstance() {
         HistoryFragment fragment = new HistoryFragment();
@@ -58,6 +65,23 @@ public class HistoryFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         setRecyclerView();
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.filterHistoryList(s.toString());
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         return view;
     }
@@ -73,8 +97,9 @@ public class HistoryFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void setContents(List<Record> recordList) {
+    private void setHistoryList(List<Record> recordList) {
         adapter.setRecordList(recordList);
+        adapter.initHistoryList();
         adapter.notifyDataSetChanged();
     }
 
@@ -88,7 +113,7 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {
                 List<Record> recordList = response.body();
-                setContents(recordList);
+                setHistoryList(recordList);
             }
 
             @Override

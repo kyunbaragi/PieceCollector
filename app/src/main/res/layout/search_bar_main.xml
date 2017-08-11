@@ -17,6 +17,7 @@
         app:srcCompat="@drawable/ic_search" />
 
     <EditText
+        android:id="@+id/et_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginRight="12dp"
