@@ -3,12 +3,14 @@ package com.yunkyun.piececollector.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yunkyun.piececollector.R;
+import com.yunkyun.piececollector.fragment.EditDialogFragment;
 import com.yunkyun.piececollector.object.Record;
 
 import java.util.Calendar;
@@ -67,6 +69,7 @@ public class RecordActivity extends BaseActivity {
         int id = view.getId();
         switch (id) {
             case R.id.btn_edit:
+                showEditDialog();
                 break;
             case R.id.btn_pick_photo:
                 showGallery();
@@ -79,6 +82,12 @@ public class RecordActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    private void showEditDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        EditDialogFragment editDialog = new EditDialogFragment();
+        editDialog.show(fm, EditDialogFragment.TAG);
     }
 
     private void showGallery() {

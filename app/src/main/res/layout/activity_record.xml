@@ -106,7 +106,7 @@
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true">
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/btn_edit"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
@@ -114,8 +114,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="24dp"
                     android:layout_toLeftOf="@+id/btn_pick_photo"
-                    android:elevation="8dp"
-                    android:src="@drawable/ic_edit" />
+                    android:background="@drawable/ic_edit"
+                    android:elevation="16dp" />
 
                 <ImageView
                     android:id="@+id/btn_pick_photo"
