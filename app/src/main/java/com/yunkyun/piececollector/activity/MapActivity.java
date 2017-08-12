@@ -84,7 +84,7 @@ import retrofit2.Response;
  * Created by YunKyun on 2017-07-27.
  */
 
-public class MapActivity extends BaseActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleMap.OnMarkerClickListener {
+public class MapActivity extends BaseActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
     @BindView(R.id.iv_my_location)
     ImageView myLocation;
     @BindView(R.id.iv_search_by_location)
@@ -93,7 +93,13 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
     TextView currentLocation;
     @BindView(R.id.toolbar_map)
     Toolbar toolbar;
-    View markerView;
+
+    View markerBlue;
+    View markerRed;
+    View markerGreen;
+    View markerBlueClicked;
+    View markerRedClicked;
+    View markerGreenClicked;
     View userPositionView;
 
     private static final String TAG = "MapActivity";
@@ -112,6 +118,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
     private LocationListener locationListener;
     private LocationManager locationManager;
     private Marker userPosition;
+    private Marker selectedMarker;
     private double currentLat = DEFAULT_LATITUDE;
     private double currentLng = DEFAULT_LONGITUDE;
     private boolean flag = true;
@@ -129,7 +136,13 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         Glide.with(this).load(R.drawable.ic_loading).into(searchByLocation);
 
         // 여행지, 유저위치 마커 레이아웃 인플레이션
-        markerView = LayoutInflater.from(this).inflate(R.layout.marker, null);
+        markerBlue = LayoutInflater.from(this).inflate(R.layout.marker_blue, null);
+        markerRed = LayoutInflater.from(this).inflate(R.layout.marker_red, null);
+        markerGreen = LayoutInflater.from(this).inflate(R.layout.marker_green, null);
+        markerBlueClicked = LayoutInflater.from(this).inflate(R.layout.marker_blue_clicked, null);
+        markerRedClicked = LayoutInflater.from(this).inflate(R.layout.marker_red_clicked, null);
+        markerGreenClicked = LayoutInflater.from(this).inflate(R.layout.marker_green_clicked, null);
+
         userPositionView = LayoutInflater.from(this).inflate(R.layout.user_position, null);
 
         // GPS 권한 체크 및 요청
@@ -150,6 +163,8 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         map.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
         map.setMinZoomPreference(MIN_ZOOM);
         map.setMaxZoomPreference(MAX_ZOOM);
+        map.setOnMarkerClickListener(this);
+        map.setOnMapClickListener(this);
 
         if (!isGpsPossible()) {
             LatLng defaultPosition = new LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
@@ -157,7 +172,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         }
     }
 
-    private void addMarkersToMap() {
+    private void searchPlacesOnMap() {
         PlaceDAO placeDAO = new PlaceDAO(this);
         VisibleRegion visibleRegion = map.getProjection().getVisibleRegion();
         List<Place> placeList = placeDAO.selectPlacesByLatLng(visibleRegion.farRight, visibleRegion.nearLeft);
@@ -166,24 +181,84 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
             AlerterMaker.makeShortAlerter(this, "검색된 여행조각이 없습니다.", "", R.color.alarmDefault);
         } else {
             map.clear();
+
             for (Place place : placeList) {
-                Log.e(TAG, place.toString());
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerView)));
-                if(place.getId() <= 200000) {
-                    ImageView markerUI = (ImageView) markerView.findViewById(R.id.iv_marker);
-                    markerUI.setImageResource(R.drawable.marker_red);
-                } else {
-                    ImageView markerUI = (ImageView) markerView.findViewById(R.id.iv_marker);
-                    markerUI.setImageResource(R.drawable.marker_green);
-                }
-                markerOptions.position(new LatLng(place.getLatitude(), place.getLongitude()));
-                markerOptions.title(place.getTitle());
-                map.addMarker(markerOptions).setTag(place);
+                addMarker(place, false);
             }
+
+            // 마커 정보 초기화 수행
+            selectedMarker = null;
             userPosition = null;
             drawUserPosition(getUserPosition());
         }
+    }
+
+    private Marker addMarker(Place place, boolean isSelectedMarker) {
+        MarkerOptions markerOptions = new MarkerOptions();
+
+        if (isSelectedMarker) {
+            if (place.getCat2().equals("A0101")) {
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerGreenClicked)));
+            } else if (place.getCat2().equals("A0201")) {
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerRedClicked)));
+            } else if (place.getCat2().equals("A0202")) {
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerBlueClicked)));
+            }
+        } else {
+            if (place.getCat2().equals("A0101")) {
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerGreen)));
+            } else if (place.getCat2().equals("A0201")) {
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerRed)));
+            } else if (place.getCat2().equals("A0202")) {
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerBlue)));
+            }
+        }
+
+        markerOptions.position(new LatLng(place.getLatitude(), place.getLongitude()));
+        markerOptions.title(place.getTitle());
+
+        Marker marker = map.addMarker(markerOptions);
+        marker.setTag(place);
+
+        return marker;
+    }
+
+    private Marker addMarker(Marker marker, boolean isSelectedMarker) {
+        return addMarker((Place) marker.getTag(), isSelectedMarker);
+    }
+
+    private void changeSelectedMarker(Marker marker) {
+        // 선택했던 마커 되돌리기
+        if (selectedMarker != null) {
+            addMarker(selectedMarker, false);
+            selectedMarker.remove();
+            selectedMarker = null;
+        }
+
+        // 선택한 마커 표시
+        if (marker != null) {
+            selectedMarker = addMarker(marker, true);
+            marker.remove();
+        }
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        CameraUpdate center = CameraUpdateFactory.newLatLng(marker.getPosition());
+        map.animateCamera(center);
+
+        if (!marker.equals(selectedMarker)) {
+            changeSelectedMarker(marker);
+        }
+
+        selectedMarker.showInfoWindow();
+
+        return true;
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        changeSelectedMarker(null);
     }
 
     private Bitmap createDrawableFromView(Context context, View view) {
@@ -234,7 +309,8 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
                 moveToUserPosition();
                 break;
             case R.id.btn_search_by_location:
-                addMarkersToMap();
+                // addMarkersToMap();
+                searchPlacesOnMap();
                 break;
             case R.id.fab_camera:
                 showCamera();
@@ -332,7 +408,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
                     if (flag) {
                         LatLng currentPosition = getUserPosition();
                         map.moveCamera(CameraUpdateFactory.newLatLng(currentPosition));
-                        addMarkersToMap();
+                        searchPlacesOnMap();
                         drawUserPosition(currentPosition);
                         flag = false;
                     }
@@ -492,11 +568,6 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
     protected void onDestroy() {
         super.onDestroy();
         googleApiClient.disconnect();
-    }
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        return false;
     }
 
     private class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
