@@ -20,8 +20,7 @@
             android:gravity="center_vertical"
             android:text="메모"
             android:textColor="@color/PrimaryTextBlack"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_character_counter"
@@ -30,7 +29,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="16dp"
             android:gravity="center_vertical"
-            android:text="글자수 0/100"
+            android:text="글자수 0/150"
             android:textSize="12sp" />
 
     </RelativeLayout>
@@ -45,7 +44,7 @@
         android:hint="내용을 입력해주세요."
         android:imeOptions="actionDone"
         android:inputType="textMultiLine"
-        android:maxLength="100"
+        android:maxLength="150"
         android:textCursorDrawable="@color/colorMyPrimaryLight"
         android:textSize="14sp">
 
