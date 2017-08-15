@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.adapter.HistoryRecyclerAdapter;
@@ -38,6 +39,8 @@ public class HistoryFragment extends Fragment {
     RecyclerView recyclerView;
     @BindView(R.id.et_search)
     EditText searchBar;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
     public static final String TAG = "HistoryFragment";
     private HistoryRecyclerAdapter adapter;
@@ -63,6 +66,8 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
         ButterKnife.bind(this, view);
+
+
 
         setRecyclerView();
         searchBar.addTextChangedListener(new TextWatcher() {
@@ -101,6 +106,7 @@ public class HistoryFragment extends Fragment {
         adapter.setRecordList(recordList);
         adapter.initHistoryList();
         adapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     private void loadRecordList() {

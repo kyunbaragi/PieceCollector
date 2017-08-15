@@ -55,6 +55,8 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         addDividerOnList(this.recordList);
     }
 
+
+
     private void addDividerOnList(List<Record> recordList) {
         List<Object> outputList = new ArrayList<>();
         if (recordList.size() > 0) {
@@ -62,18 +64,20 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             // Start Header Divider
             HistoryDivider current = new HistoryDivider(recordList.get(0).getCreated());
-            outputList.add(current);
+            outputList.add(0, current);
 
             for (Record record : recordList) {
                 HistoryDivider next = new HistoryDivider(record.getCreated());
                 if (current.compareTo(next) != 0) {
                     outputList.add(next);
+                    current = next;
                 }
                 outputList.add(record);
-                current = next;
             }
         }
+
         this.outputList = outputList;
+        notifyDataSetChanged();
     }
 
     @Override

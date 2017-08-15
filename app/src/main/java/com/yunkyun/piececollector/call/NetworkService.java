@@ -39,12 +39,16 @@ public interface NetworkService {
     @POST("records")
     Call<List<Record>> getRecords(@Body HashMap<String, String> parameters);
 
-    @POST("upload/memo")
-    Call<okhttp3.ResponseBody> postMemo(@Body HashMap<String, String> parameters);
-
     @Multipart
     @POST("upload/image")
     Call<okhttp3.ResponseBody> postImage(@QueryMap HashMap<String, String> parameters, @Part MultipartBody.Part image);
+
+    @Multipart
+    @POST("change/image")
+    Call<okhttp3.ResponseBody> changeImage(@QueryMap HashMap<String, String> parameters, @Part MultipartBody.Part image);
+
+    @POST("change/memo")
+    Call<okhttp3.ResponseBody> postMemo(@Body HashMap<String, String> parameters);
 
     Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:sss")

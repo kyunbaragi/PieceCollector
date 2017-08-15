@@ -1,42 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorMyPrimary">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_divider"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="2dp"
+        card_view:cardBackgroundColor="@color/colorMyPrimary"
+        card_view:cardCornerRadius="4dp">
 
-        android:gravity="center_vertical"
-        android:text="Divider"
-        android:textColor="@color/HintTextWhite"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tv_divider"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center_vertical"
+            android:text="Divider"
+            android:textColor="@color/HintTextWhite"
+            android:textSize="14sp" />
 
-    <!--<TextView
-        android:id="@+id/tv_divider_month"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@id/tv_divider_year"
-        android:gravity="center_vertical"
-        android:text="Month"
-        android:textColor="@color/HintTextWhite"
-        android:layout_alignBottom="@+id/tv_divider_year"
-        android:textSize="14sp" />
+    </android.support.v7.widget.CardView>
 
-    <TextView
-        android:id="@+id/tv_divider_date"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@id/tv_divider_month"
-        android:gravity="center_vertical"
-        android:text="Date"
-        android:textColor="@color/HintTextWhite"
-        android:textSize="14sp" />-->
 
 </RelativeLayout>

@@ -532,9 +532,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         MultipartBody.Part body = MultipartBody.Part.createFormData("image", imageFile.getName(), requestFile);
 
         HashMap<String, String> parameters = new HashMap<>();
-
         Long userID = SharedPreferencesService.getInstance().getPrefLongData(AppPreferenceKey.PREF_USER_ID_KEY);
-
         parameters.put("user_id", String.valueOf(userID));
         parameters.put("place_id", String.valueOf(place.getId()));
 

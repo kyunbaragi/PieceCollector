@@ -7,12 +7,13 @@
     android:background="@color/White"
     android:orientation="vertical">
 
-    <include layout="@layout/search_bar_main"/>
+    <include layout="@layout/search_bar_main" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_collection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="6dp" />
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp" />
 
 </LinearLayout>

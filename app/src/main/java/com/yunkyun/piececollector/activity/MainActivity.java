@@ -10,21 +10,33 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yunkyun.piececollector.R;
+import com.yunkyun.piececollector.call.NetworkService;
+import com.yunkyun.piececollector.dao.PlaceDAO;
 import com.yunkyun.piececollector.fragment.CollectionFragment;
 import com.yunkyun.piececollector.fragment.HistoryFragment;
 import com.yunkyun.piececollector.fragment.MainFragment;
 import com.yunkyun.piececollector.fragment.ProfileFragment;
+import com.yunkyun.piececollector.object.Place;
+import com.yunkyun.piececollector.util.AppPreferenceKey;
 import com.yunkyun.piececollector.util.PermissionManager;
+import com.yunkyun.piececollector.util.PreferenceKey;
+import com.yunkyun.piececollector.util.SharedPreferencesService;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.iv_home)
@@ -59,6 +71,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        syncDatabase();
+
         setFinishToast();
         setFragmentManager();
 
@@ -67,6 +81,49 @@ public class MainActivity extends BaseActivity {
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+
+    private void syncDatabase() {
+        final String clientVersion = SharedPreferencesService.getInstance().getPrefStringData(AppPreferenceKey.PREF_DB_VERSION_KEY);
+        final NetworkService service = NetworkService.retrofit.create(NetworkService.class);
+
+        if (clientVersion.isEmpty()) {
+            SharedPreferencesService.getInstance().setPrefData(PreferenceKey.DB_VERSION, "1.0");
+            updateDatabase(service);
+        } else {
+            Call<String> call = service.getVersion("places");
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    String serverVersion = response.body();
+                    if (!clientVersion.equals(serverVersion)) {
+                        updateDatabase(service);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Log.e(TAG, "onFailure in syncDatabase()");
+                }
+            });
+        }
+    }
+
+    private void updateDatabase(NetworkService service) {
+        final PlaceDAO placeDAO = new PlaceDAO(this);
+        Call<List<Place>> call = service.getPlaces();
+        call.enqueue(new Callback<List<Place>>() {
+            @Override
+            public void onResponse(Call<List<Place>> call, Response<List<Place>> response) {
+                List<Place> placeList = response.body();
+                placeDAO.insertPlaces(placeList);
+            }
+
+            @Override
+            public void onFailure(Call<List<Place>> call, Throwable t) {
+                Log.e(TAG, "onFailure");
+            }
+        });
     }
 
     @OnClick({R.id.btn_nav_home, R.id.btn_nav_history, R.id.btn_nav_collection, R.id.btn_nav_profile})

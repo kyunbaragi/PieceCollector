@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_margin="6dp"
+        android:layout_margin="8dp"
         card_view:cardElevation="0dp"
         card_view:cardCornerRadius="8dp">
 

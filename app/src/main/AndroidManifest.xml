@@ -71,6 +71,10 @@
             android:name=".activity.RecordActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity
+            android:name=".activity.CollectionActivity"
+            android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>

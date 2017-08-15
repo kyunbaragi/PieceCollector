@@ -12,9 +12,11 @@ import com.bumptech.glide.Glide;
 import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.util.AppPreferenceKey;
 import com.yunkyun.piececollector.util.SharedPreferencesService;
+import com.yunkyun.piececollector.util.ToastMaker;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -54,5 +56,18 @@ public class ProfileFragment extends Fragment {
         profileEmail.setText(email);
 
         return view;
+    }
+
+    @OnClick({R.id.btn_help, R.id.btn_feedback})
+    void onButtonClick(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.btn_help:
+                ToastMaker.makeShortToast(getContext(), "도움말");
+                break;
+            case R.id.btn_feedback:
+
+                break;
+        }
     }
 }

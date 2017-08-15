@@ -68,9 +68,10 @@ public class MainFragment extends Fragment implements RecyclerRefreshLayout.OnRe
     }
 
     private void setRecyclerView() {
-        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        //recyclerView.setItemAnimator(null);
 
         adapter = new MainRecyclerAdapter(getContext());
         recyclerView.setAdapter(adapter);
@@ -103,9 +104,6 @@ public class MainFragment extends Fragment implements RecyclerRefreshLayout.OnRe
             @Override
             public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {
                 List<Record> recordList = response.body();
-                for(Record record : recordList){
-                    Log.e(TAG, record.toString());
-                }
                 setContents(recordList);
             }
 

@@ -1,7 +1,9 @@
 package com.yunkyun.piececollector.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,15 +20,21 @@ import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.call.NetworkService;
 import com.yunkyun.piececollector.fragment.EditDialogFragment;
 import com.yunkyun.piececollector.object.Record;
+import com.yunkyun.piececollector.util.AppPreferenceKey;
+import com.yunkyun.piececollector.util.SharedPreferencesService;
 import com.yunkyun.piececollector.util.ToastMaker;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,7 +58,6 @@ public class RecordActivity extends BaseActivity implements EditDialogFragment.N
     private static final int REQUEST_PICK_PHOTO_FROM_ALBUM = 0;
     private Record record;
     private String memo;
-    private Uri photoUri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -125,33 +132,54 @@ public class RecordActivity extends BaseActivity implements EditDialogFragment.N
             switch (requestCode) {
                 case REQUEST_PICK_PHOTO_FROM_ALBUM:
                     if (data != null) {
-                        photoUri = data.getData();
-                        File imageFile = new File(photoUri.toString());
-                        ToastMaker.makeShortToast(this, imageFile.getName());
-                    }
+                        Uri contentURI = data.getData();
+                        Uri fileURI = null;
+                        try {
+                            fileURI = convertContentToFileUri(this, contentURI);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
+                        File imageFile = new File(fileURI.getPath());
+                        changeImage(imageFile);
+                    }
                     break;
             }
         }
     }
 
-    /*private void uploadImage(Place place) {
+    public Uri convertContentToFileUri(Context context, Uri uri) throws Exception {
+        Cursor cursor = null;
+        try {
+            cursor = context.getContentResolver().query(uri, null, null, null, null);
+            cursor.moveToNext();
+            return Uri.fromFile(new File(cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA))));
+        } finally {
+            if(cursor != null)
+                cursor.close();
+        }
+    }
+
+    private void changeImage(File imageFile) {
         NetworkService service = NetworkService.retrofit.create(NetworkService.class);
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image*//*"), imageFile);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
         MultipartBody.Part body = MultipartBody.Part.createFormData("image", imageFile.getName(), requestFile);
 
         HashMap<String, String> parameters = new HashMap<>();
-
         Long userID = SharedPreferencesService.getInstance().getPrefLongData(AppPreferenceKey.PREF_USER_ID_KEY);
-
+        parameters.put("record_id", String.valueOf(record.getId()));
         parameters.put("user_id", String.valueOf(userID));
-        parameters.put("place_id", String.valueOf(place.getId()));
 
-        Call<okhttp3.ResponseBody> call = service.postImage(parameters, body);
+        Call<okhttp3.ResponseBody> call = service.changeImage(parameters, body);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.e(TAG, "onResponse in uploadImage");
+                try {
+                    refreshImage(response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -159,15 +187,16 @@ public class RecordActivity extends BaseActivity implements EditDialogFragment.N
                 Log.e(TAG, "onFailure in uploadImage");
             }
         });
-    }*/
+    }
+
+    private void refreshImage(String imagePath) {
+        Glide.with(this).load(imagePath).into(photoUI);
+        ToastMaker.makeShortToast(this, "사진이 수정되었습니다.");
+    }
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, String userInput) {
-        memoUI.setText(userInput);
-        record.setMemo(userInput);
-        memo = userInput;
-
-        Log.e(TAG, "onDialogPositiveClick");
+        refreshMemo(userInput);
 
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("id", String.valueOf(record.getId()));
@@ -186,6 +215,11 @@ public class RecordActivity extends BaseActivity implements EditDialogFragment.N
                 Log.e(TAG, "onFailure");
             }
         });
+    }
+
+    private void refreshMemo(String userInput) {
+        memoUI.setText(userInput);
+        memo = userInput;
     }
 
     @Override
