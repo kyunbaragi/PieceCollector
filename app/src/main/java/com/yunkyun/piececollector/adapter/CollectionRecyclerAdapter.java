@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.activity.CollectionActivity;
 import com.yunkyun.piececollector.object.Collection;
@@ -43,10 +44,13 @@ public class CollectionRecyclerAdapter extends RecyclerView.Adapter<CollectionRe
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final Collection collection = collectionList.get(position);
+        Glide.with(context).load(collection.getImagePath()).into(holder.image);
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, CollectionActivity.class);
+                intent.putExtra("collection", collection);
                 context.startActivity(intent);
             }
         });

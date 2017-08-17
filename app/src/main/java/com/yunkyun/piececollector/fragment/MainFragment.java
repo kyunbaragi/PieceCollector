@@ -18,7 +18,6 @@ import com.yunkyun.piececollector.object.Record;
 import com.yunkyun.piececollector.util.AppPreferenceKey;
 import com.yunkyun.piececollector.util.SharedPreferencesService;
 
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -95,11 +94,9 @@ public class MainFragment extends Fragment implements RecyclerRefreshLayout.OnRe
     }
 
     private void loadRecordList() {
-        HashMap<String, String> parameters = new HashMap<>();
-        parameters.put("id", String.valueOf(SharedPreferencesService.getInstance().getPrefLongData(AppPreferenceKey.PREF_USER_ID_KEY)));
         NetworkService service = NetworkService.retrofit.create(NetworkService.class);
-
-        Call<List<Record>> call = service.getRecords(parameters);
+        String userID = String.valueOf(SharedPreferencesService.getInstance().getPrefLongData(AppPreferenceKey.PREF_USER_ID_KEY));
+        Call<List<Record>> call = service.getRecords(userID);
         call.enqueue(new Callback<List<Record>>() {
             @Override
             public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {

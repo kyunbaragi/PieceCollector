@@ -5,20 +5,24 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.adapter.CollectionRecyclerAdapter;
+import com.yunkyun.piececollector.call.NetworkService;
 import com.yunkyun.piececollector.object.Collection;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 /**
  * Created by YunKyun on 2017-07-27.
  */
@@ -26,6 +30,8 @@ import butterknife.ButterKnife;
 public class CollectionFragment extends Fragment {
     @BindView(R.id.rv_collection)
     RecyclerView recyclerView;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
     public static final String TAG = "CollectionFragment";
     private CollectionRecyclerAdapter adapter;
@@ -42,8 +48,6 @@ public class CollectionFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -69,14 +73,27 @@ public class CollectionFragment extends Fragment {
     }
 
     private void loadCollectionList() {
-        List<Collection> collectionList = new ArrayList<>();
-        collectionList.add(new Collection());
+        NetworkService service = NetworkService.retrofit.create(NetworkService.class);
 
-        setCollectionList(collectionList);
+        Call<List<Collection>> call = service.getCollections();
+        call.enqueue(new Callback<List<Collection>>() {
+            @Override
+            public void onResponse(Call<List<Collection>> call, Response<List<Collection>> response) {
+                List<Collection> collectionList = response.body();
+                Log.d(TAG, String.valueOf(collectionList.size()));
+                setCollectionList(collectionList);
+            }
+
+            @Override
+            public void onFailure(Call<List<Collection>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void setCollectionList(List<Collection> collectionList) {
         adapter.setCollectionList(collectionList);
         adapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }

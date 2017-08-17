@@ -11,6 +11,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.activity.RecordActivity;
 import com.yunkyun.piececollector.object.Record;
@@ -55,7 +57,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Record record = recordList.get(position);
 
         // CardView 생성 animation 정의
@@ -63,7 +65,11 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         animation.setDuration(1000);
         holder.image.startAnimation(animation);
 
-        Glide.with(context).load(record.getImagePath()).into(holder.image);
+        Glide.with(context)
+                .load(record.getImagePath())
+                .apply(new RequestOptions().override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL))
+                .into(holder.image);
+
         holder.image.setOnClickListener(new View.OnClickListener() {
             // TODO: Start RecordActivity.
             @Override

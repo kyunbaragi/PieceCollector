@@ -2,6 +2,7 @@ package com.yunkyun.piececollector.call;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.yunkyun.piececollector.object.Collection;
 import com.yunkyun.piececollector.object.Place;
 import com.yunkyun.piececollector.object.Record;
 
@@ -36,8 +37,14 @@ public interface NetworkService {
     @GET("places")
     Call<List<Place>> getPlaces();
 
-    @POST("records")
-    Call<List<Record>> getRecords(@Body HashMap<String, String> parameters);
+    @GET("places/{collection}")
+    Call<List<Place>> getPlacesByCollection(@Path("collection") String collection);
+
+    @GET("collections")
+    Call<List<Collection>> getCollections();
+
+    @GET("records/{user}")
+    Call<List<Record>> getRecords(@Path("user") String user);
 
     @Multipart
     @POST("upload/image")

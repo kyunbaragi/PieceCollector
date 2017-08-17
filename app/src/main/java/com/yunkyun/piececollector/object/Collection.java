@@ -1,14 +1,17 @@
 package com.yunkyun.piececollector.object;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by YunKyun on 2017-08-02.
  */
 
-public class Collection {
+public class Collection implements Parcelable {
     @SerializedName("_id")
-    private int id;
+    private Long id;
     @SerializedName("title")
     private String title;
     @SerializedName("description")
@@ -16,11 +19,15 @@ public class Collection {
     @SerializedName("image_path")
     private String imagePath;
 
-    public int getId() {
+    public Collection(Parcel in) {
+        readFromParcel(in);
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -57,4 +64,36 @@ public class Collection {
                 ", imagePath='" + imagePath + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    private void readFromParcel(Parcel in) {
+        this.id = in.readLong();
+        this.title = in.readString();
+        this.description = in.readString();
+        this.imagePath = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(imagePath);
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator(){
+        @Override
+        public Collection createFromParcel(Parcel source) {
+            return new Collection(source);
+        }
+
+        @Override
+        public Collection[] newArray(int size) {
+            return new Collection[size];
+        }
+    };
 }
