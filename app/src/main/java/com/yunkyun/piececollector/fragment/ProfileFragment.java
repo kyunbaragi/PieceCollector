@@ -1,5 +1,6 @@
 package com.yunkyun.piececollector.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yunkyun.piececollector.R;
+import com.yunkyun.piececollector.activity.FeedbackActivity;
+import com.yunkyun.piececollector.activity.LicenseActivity;
 import com.yunkyun.piececollector.util.AppPreferenceKey;
 import com.yunkyun.piececollector.util.SharedPreferencesService;
 import com.yunkyun.piececollector.util.ToastMaker;
@@ -58,15 +61,22 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    @OnClick({R.id.btn_help, R.id.btn_feedback})
+    @OnClick({R.id.btn_help, R.id.btn_license, R.id.btn_review, R.id.btn_feedback})
     void onButtonClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.btn_help:
                 ToastMaker.makeShortToast(getContext(), "도움말");
                 break;
+            case R.id.btn_license:
+                Intent intent1 = new Intent(getContext(), LicenseActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.btn_review:
+                break;
             case R.id.btn_feedback:
-
+                Intent intent2 = new Intent(getContext(), FeedbackActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

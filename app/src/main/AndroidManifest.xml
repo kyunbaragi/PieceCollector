@@ -75,6 +75,14 @@
             android:name=".activity.CollectionActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity
+            android:name=".activity.LicenseActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>

@@ -9,14 +9,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_weight="1">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/iv_profile_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             android:src="@drawable/logo_app"
             app:civ_border_color="@color/Divider"
             app:civ_border_width="1dp" />
@@ -27,10 +27,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_profile_image"
             android:layout_centerHorizontal="true"
-            android:paddingTop="15dp"
+            android:layout_marginTop="8dp"
             android:text="YunKyun Han"
             android:textColor="@color/PrimaryTextBlack"
-            android:textSize="20sp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_profile_email"
@@ -38,60 +39,113 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_profile_nickname"
             android:layout_centerHorizontal="true"
-            android:paddingTop="5dp"
+            android:layout_marginTop="4dp"
             android:text="kyunbaragi@daum.net"
             android:textColor="@color/SecondaryTextBlack"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="50dp">
+        android:padding="40dp">
 
-        <Button
+        <LinearLayout
             android:id="@+id/btn_help"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/bg_profile_item"
-            android:text="도움말"
-            android:textAlignment="textStart"
-            android:textColor="@color/PrimaryTextBlack"
-            android:textSize="14sp" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_settings"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_help" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="24dp"
+                android:gravity="center_vertical"
+                android:text="도움말"
+                android:textColor="@color/PrimaryTextBlack"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_review"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/bg_profile_item"
-            android:text="라이센스"
-            android:textAlignment="textStart"
-            android:textColor="@color/PrimaryTextBlack"
-            android:textSize="14sp" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_modify_profile"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_profile_item"
-            android:text="리뷰 남기기"
-            android:textAlignment="textStart"
-            android:textColor="@color/PrimaryTextBlack"
-            android:textSize="14sp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_favorite" />
 
-        <Button
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="24dp"
+                android:gravity="center_vertical"
+                android:text="리뷰 남기기"
+                android:textColor="@color/PrimaryTextBlack"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/btn_feedback"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/bg_profile_item"
-            android:text="피드백 보내기"
-            android:textAlignment="textStart"
-            android:textColor="@color/PrimaryTextBlack"
-            android:textSize="14sp" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_send" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="24dp"
+                android:gravity="center_vertical"
+                android:text="피드백 보내기"
+                android:textColor="@color/PrimaryTextBlack"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_license"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_profile_item"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_copyright" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="24dp"
+                android:gravity="center_vertical"
+                android:text="라이센스 정보"
+                android:textColor="@color/PrimaryTextBlack"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
 
 </LinearLayout>
