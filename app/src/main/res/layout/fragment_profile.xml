@@ -41,7 +41,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="4dp"
             android:text="kyunbaragi@daum.net"
-            android:textColor="@color/SecondaryTextBlack"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -52,12 +51,13 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="40dp">
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp">
 
         <LinearLayout
             android:id="@+id/btn_help"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:background="@drawable/bg_profile_item"
             android:orientation="horizontal">
 
@@ -80,7 +80,7 @@
         <LinearLayout
             android:id="@+id/btn_review"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:background="@drawable/bg_profile_item"
             android:orientation="horizontal">
 
@@ -91,7 +91,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="24dp"
                 android:gravity="center_vertical"
                 android:text="리뷰 남기기"
@@ -103,7 +103,7 @@
         <LinearLayout
             android:id="@+id/btn_feedback"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:background="@drawable/bg_profile_item"
             android:orientation="horizontal">
 
@@ -114,7 +114,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="24dp"
                 android:gravity="center_vertical"
                 android:text="피드백 보내기"
@@ -126,7 +126,7 @@
         <LinearLayout
             android:id="@+id/btn_license"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:background="@drawable/bg_profile_item"
             android:orientation="horizontal">
 
@@ -137,7 +137,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="24dp"
                 android:gravity="center_vertical"
                 android:text="라이센스 정보"

@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="@drawable/bg_profile_item">
 
         <ImageView
@@ -29,5 +29,64 @@
             android:textSize="16sp" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="여행조각모음에 대한 의견을 보내주세요."
+                android:textColor="@color/PrimaryTextBlack"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.2"
+                android:text="여행조각모음을 이용하면서 만족스러웠던 점, 개선이 필요한 점에 대해 듣고 싶습니다. 주시는 의견에 개별적으로 답해 드리지는 못하지만 여러분의 소중한 의견에 항상 귀기울이겠습니다. :)"
+                android:textColor="@color/PrimaryTextBlack"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edittext"
+            android:gravity="top"
+            android:hint="어떤 문제가 있었나요? 어떤 과정을 거쳐 문제가 발생했는지 자세히 설명해주시면 도움이 됩니다."
+            android:imeOptions="normal"
+            android:inputType="textMultiLine"
+            android:padding="8dp"
+            android:textColor="@color/SecondaryTextBlack"
+            android:textCursorDrawable="@color/colorMyPrimaryLight"
+            android:textSize="20sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/colorAccent"
+            android:text="피드백 제출"
+            android:textColor="@color/White"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
 </LinearLayout>
