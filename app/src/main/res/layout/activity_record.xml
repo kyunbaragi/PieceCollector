@@ -42,12 +42,13 @@
 
             <ImageView
                 android:id="@+id/btn_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="20dp"
+                android:background="@drawable/bg_circle_black"
                 android:src="@drawable/ic_back_white" />
 
         </RelativeLayout>
@@ -58,7 +59,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="11"
-            android:background="@color/White"
+            android:background="@color/LightGray"
             android:elevation="16dp"
             android:padding="20dp">
 
@@ -67,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_profile_item"
+                android:background="@drawable/bg_divider_gray"
                 android:orientation="vertical">
 
                 <TextView
@@ -77,7 +78,7 @@
                     android:layout_marginBottom="4dp"
                     android:text="광화문"
                     android:textColor="@color/PrimaryTextBlack"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -87,7 +88,7 @@
                     android:layout_below="@id/tv_detail_title"
                     android:layout_marginBottom="4dp"
                     android:text="2017. 08. 09."
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -98,6 +99,7 @@
                 android:layout_above="@+id/bottom_panel"
                 android:layout_below="@+id/top_panel"
                 android:text="나에게 광화문은 언제나 새롭다."
+                android:textColor="@color/SecondaryTextBlack"
                 android:textSize="14sp" />
 
             <RelativeLayout
@@ -108,8 +110,8 @@
 
                 <ImageButton
                     android:id="@+id/btn_edit"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="24dp"
@@ -119,8 +121,8 @@
 
                 <ImageView
                     android:id="@+id/btn_pick_photo"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:elevation="8dp"
@@ -128,8 +130,8 @@
 
                 <ImageView
                     android:id="@+id/btn_share"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="24dp"

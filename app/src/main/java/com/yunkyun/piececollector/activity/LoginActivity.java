@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.kakao.auth.AuthType;
@@ -41,12 +40,8 @@ public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.iv_login_logo)
     ImageView appLogo;
-    @BindView(R.id.btn_login_naver)
-    ImageView iconNaver;
     @BindView(R.id.btn_login_kakao)
     ImageView iconKakao;
-    @BindView(R.id.btn_login_facebook)
-    ImageView iconFacebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,24 +49,16 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        Glide.with(this).load(R.drawable.logo_vertical).into(appLogo);
-        Glide.with(this).load(R.drawable.ic_naver).into(iconNaver);
+        Glide.with(this).load(R.drawable.logo_splash).into(appLogo);
         Glide.with(this).load(R.drawable.ic_kakao).into(iconKakao);
-        Glide.with(this).load(R.drawable.ic_facebook).into(iconFacebook);
     }
 
-    @OnClick({R.id.btn_login_kakao, R.id.btn_login_facebook, R.id.btn_login_naver})
+    @OnClick({R.id.btn_login_kakao})
     void onButtonClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.btn_login_kakao:
                 openLoginSession();
-                break;
-            case R.id.btn_login_facebook:
-                Toast.makeText(this, "Login with Facebook", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.btn_login_naver:
-                Toast.makeText(this, "Login with Naver", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

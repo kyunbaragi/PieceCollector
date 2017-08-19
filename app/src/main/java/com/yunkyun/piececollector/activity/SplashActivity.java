@@ -36,7 +36,7 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
 
-        Glide.with(this).load(R.drawable.logo_vertical).into(appLogo);
+        Glide.with(this).load(R.drawable.logo_splash).into(appLogo);
 
         new Handler().postDelayed(new Runnable() {
             @Override

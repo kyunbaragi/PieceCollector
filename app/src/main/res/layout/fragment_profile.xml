@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White"
+    android:background="@color/LightGray"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -30,8 +30,7 @@
             android:layout_marginTop="8dp"
             android:text="YunKyun Han"
             android:textColor="@color/PrimaryTextBlack"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/tv_profile_email"
@@ -41,8 +40,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="4dp"
             android:text="kyunbaragi@daum.net"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            android:textSize="16dp" />
 
     </RelativeLayout>
 
@@ -58,7 +56,7 @@
             android:id="@+id/btn_help"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/bg_profile_item"
+            android:background="@drawable/bg_divider_gray"
             android:orientation="horizontal">
 
             <ImageView
@@ -81,7 +79,7 @@
             android:id="@+id/btn_review"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/bg_profile_item"
+            android:background="@drawable/bg_divider_gray"
             android:orientation="horizontal">
 
             <ImageView
@@ -104,7 +102,7 @@
             android:id="@+id/btn_feedback"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/bg_profile_item"
+            android:background="@drawable/bg_divider_gray"
             android:orientation="horizontal">
 
             <ImageView
@@ -127,7 +125,7 @@
             android:id="@+id/btn_license"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/bg_profile_item"
+            android:background="@drawable/bg_divider_gray"
             android:orientation="horizontal">
 
             <ImageView

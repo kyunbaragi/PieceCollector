@@ -9,7 +9,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/bg_profile_item"
+        android:background="@drawable/bg_divider_white"
         android:orientation="vertical">
 
         <TextView
@@ -20,7 +20,8 @@
             android:gravity="center_vertical"
             android:text="메모"
             android:textColor="@color/PrimaryTextBlack"
-            android:textSize="18sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_character_counter"

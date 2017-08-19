@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White"
+    android:background="@color/LightGray"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/bg_profile_item">
+        android:background="@drawable/bg_divider_gray">
 
         <ImageView
             android:id="@+id/btn_close"
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:autoLink="web"
-                android:background="@drawable/bg_profile_item"
+                android:background="@drawable/bg_divider_gray"
                 android:paddingBottom="15dp"
                 android:text="@string/license_apache"
                 android:textColor="@color/PrimaryTextBlack"

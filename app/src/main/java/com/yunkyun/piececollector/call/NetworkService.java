@@ -57,6 +57,9 @@ public interface NetworkService {
     @POST("change/memo")
     Call<okhttp3.ResponseBody> postMemo(@Body HashMap<String, String> parameters);
 
+    @POST("feedback")
+    Call<okhttp3.ResponseBody> sendFeedback(@Body HashMap<String, String> parameters);
+
     Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:sss")
             .create();

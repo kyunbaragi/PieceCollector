@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="55dp"
     android:layout_alignParentBottom="true"
     android:background="@color/White"
-    android:orientation="horizontal"
     android:elevation="16dp"
+    android:orientation="horizontal"
     tools:showIn="@layout/activity_main">
 
     <RelativeLayout
@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_margin="6dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/ic_home_clicked" />
 
         <TextView
@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_home"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
             android:text="홈"
             android:textColor="@color/colorAccent"
             android:textSize="10sp" />
@@ -47,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_margin="6dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/ic_history" />
 
         <TextView
@@ -56,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_history"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
             android:text="기록"
             android:textSize="10sp" />
     </RelativeLayout>
@@ -72,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_margin="6dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/ic_collection" />
 
         <TextView
@@ -81,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_collection"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
             android:text="컬렉션"
             android:textSize="10sp" />
     </RelativeLayout>
@@ -97,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_margin="6dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/ic_profile" />
 
         <TextView
@@ -106,6 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_profile"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
             android:text="프로필"
             android:textSize="10sp" />
     </RelativeLayout>

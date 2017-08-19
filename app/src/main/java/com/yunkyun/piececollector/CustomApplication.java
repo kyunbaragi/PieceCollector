@@ -26,7 +26,8 @@ public class CustomApplication extends Application {
         // Typekit Custom Font settings.
         Typekit.getInstance()
                 .addNormal(Typekit.createFromAsset(this, "fonts/NanumSquareR.ttf"))
-                .addBold(Typekit.createFromAsset(this, "fonts/NanumSquareB.ttf"));
+                .addBold(Typekit.createFromAsset(this, "fonts/NanumSquareB.ttf"))
+                .addCustom1(Typekit.createFromAsset(this, "fonts/NanumBarunGothic.ttf"));
 
         SharedPreferencesService.getInstance().load(getApplicationContext());
     }

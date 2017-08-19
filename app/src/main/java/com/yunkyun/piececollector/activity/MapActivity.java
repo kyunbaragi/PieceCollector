@@ -18,7 +18,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,10 +88,8 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
     ImageView myLocation;
     @BindView(R.id.iv_search_by_location)
     ImageView searchByLocation;
-    @BindView(R.id.tv_current_location)
-    TextView currentLocation;
-    @BindView(R.id.toolbar_map)
-    Toolbar toolbar;
+    /*@BindView(R.id.toolbar_map)
+    Toolbar toolbar;*/
 
     View markerBlue;
     View markerRed;
@@ -412,8 +409,6 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
                         drawUserPosition(currentPosition);
                         flag = false;
                     }
-                    String userLocation = String.format("위도: %.5f / 경도: %.5f", currentLat, currentLng);
-                    currentLocation.setText(userLocation);
                 }
             }
         };
@@ -540,12 +535,12 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.e(TAG, "onResponse in uploadImage");
+                Log.d(TAG, "onResponse in uploadImage");
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e(TAG, "onFailure in uploadImage");
+                Log.d(TAG, "onFailure in uploadImage");
             }
         });
     }
@@ -588,15 +583,12 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
 
         private void render(Marker marker, View view) {
             TextView titleUi = (TextView) view.findViewById(R.id.tv_place_title);
-            TextView locationUi = (TextView) view.findViewById(R.id.tv_place_position);
             TextView distanceUi = (TextView) view.findViewById(R.id.tv_place_distance);
 
             Place place = (Place) marker.getTag();
 
             if (place != null) {
                 titleUi.setText(place.getTitle());
-                String placeLocation = String.format("위도: %.5f / 경도: %.5f", place.getLatitude(), place.getLongitude());
-                locationUi.setText(placeLocation);
                 double distance = MyMath.calDistance(place.getLatitude(), place.getLongitude(), currentLat, currentLng);
                 String placeDistance = String.format("%.2f km", distance);
                 distanceUi.setText(placeDistance);

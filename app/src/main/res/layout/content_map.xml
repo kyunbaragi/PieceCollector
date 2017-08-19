@@ -24,7 +24,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_margin="@dimen/fab_margin"
-            android:background="@drawable/bg_my_location"
+            android:background="@drawable/bg_circle_white"
             android:elevation="4dp"
             android:padding="10dp">
 
@@ -78,22 +78,6 @@
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/ic_camera"
             app:backgroundTint="@color/colorAccent" />
-
-        <TextView
-            android:id="@+id/tv_current_location"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/btn_search_by_location"
-            android:layout_marginRight="@dimen/fab_margin"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/bg_current_location"
-            android:elevation="4dp"
-            android:padding="4dp"
-            android:text="안녕하세요. 당신의 길잡이입니다."
-            android:textAlignment="center"
-            android:textColor="@color/White"
-            android:textSize="8sp" />
 
     </RelativeLayout>
 

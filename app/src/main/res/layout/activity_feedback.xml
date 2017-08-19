@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White"
+    android:background="@color/LightGray"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/bg_profile_item">
+        android:background="@drawable/bg_divider_gray">
 
         <ImageView
             android:id="@+id/btn_close"
@@ -33,6 +33,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <LinearLayout
@@ -45,6 +47,7 @@
             android:paddingTop="20dp">
 
             <TextView
+                android:id="@+id/tv_feedback_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -54,6 +57,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_feedback_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lineSpacingMultiplier="1.2"
@@ -64,6 +68,7 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/et_feedback"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="20dp"
@@ -76,11 +81,12 @@
             android:padding="8dp"
             android:textColor="@color/SecondaryTextBlack"
             android:textCursorDrawable="@color/colorMyPrimaryLight"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <Button
+            android:id="@+id/btn_send_feedback"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
             android:background="@color/colorAccent"
             android:text="피드백 제출"
             android:textColor="@color/White"

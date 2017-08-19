@@ -42,12 +42,13 @@
 
             <ImageView
                 android:id="@+id/btn_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="20dp"
+                android:background="@drawable/bg_circle_black"
                 android:src="@drawable/ic_back_white" />
 
         </RelativeLayout>
@@ -75,7 +76,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="11"
-            android:background="@color/White"
+            android:background="@color/LightGray"
             android:elevation="16dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
@@ -86,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_profile_item"
+                android:background="@drawable/bg_divider_gray"
                 android:orientation="vertical">
 
                 <TextView
@@ -96,7 +97,7 @@
                     android:layout_marginBottom="4dp"
                     android:text="Title"
                     android:textColor="@color/PrimaryTextBlack"
-                    android:textSize="18sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -107,6 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/top_panel"
                 android:text="Description"
+                android:textColor="@color/SecondaryTextBlack"
                 android:textSize="14sp" />
 
             <RelativeLayout

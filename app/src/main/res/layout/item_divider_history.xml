@@ -17,9 +17,8 @@
             android:id="@+id/tv_divider"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:gravity="center_vertical"
+            android:paddingLeft="8dp"
             android:text="Divider"
             android:textColor="@color/HintTextWhite"
             android:textSize="14sp" />
