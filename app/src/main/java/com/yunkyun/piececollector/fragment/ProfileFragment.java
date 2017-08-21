@@ -12,10 +12,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.activity.FeedbackActivity;
+import com.yunkyun.piececollector.activity.HelpActivity;
 import com.yunkyun.piececollector.activity.LicenseActivity;
 import com.yunkyun.piececollector.util.AppPreferenceKey;
 import com.yunkyun.piececollector.util.SharedPreferencesService;
-import com.yunkyun.piececollector.util.ToastMaker;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,7 +66,8 @@ public class ProfileFragment extends Fragment {
         int id = view.getId();
         switch (id) {
             case R.id.btn_help:
-                ToastMaker.makeShortToast(getContext(), "도움말");
+                Intent intent = new Intent(getContext(), HelpActivity.class);
+                startActivity(intent);
                 break;
             case R.id.btn_license:
                 Intent intent1 = new Intent(getContext(), LicenseActivity.class);

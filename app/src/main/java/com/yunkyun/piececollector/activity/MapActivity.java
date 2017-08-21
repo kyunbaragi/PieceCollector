@@ -94,9 +94,11 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
     View markerBlue;
     View markerRed;
     View markerGreen;
+    View markerYellow;
     View markerBlueClicked;
     View markerRedClicked;
     View markerGreenClicked;
+    View markerYellowClicked;
     View userPositionView;
 
     private static final String TAG = "MapActivity";
@@ -136,9 +138,11 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         markerBlue = LayoutInflater.from(this).inflate(R.layout.marker_blue, null);
         markerRed = LayoutInflater.from(this).inflate(R.layout.marker_red, null);
         markerGreen = LayoutInflater.from(this).inflate(R.layout.marker_green, null);
+        markerYellow = LayoutInflater.from(this).inflate(R.layout.marker_yellow, null);
         markerBlueClicked = LayoutInflater.from(this).inflate(R.layout.marker_blue_clicked, null);
         markerRedClicked = LayoutInflater.from(this).inflate(R.layout.marker_red_clicked, null);
         markerGreenClicked = LayoutInflater.from(this).inflate(R.layout.marker_green_clicked, null);
+        markerYellowClicked = LayoutInflater.from(this).inflate(R.layout.marker_yellow_clicked, null);
 
         userPositionView = LayoutInflater.from(this).inflate(R.layout.user_position, null);
 
@@ -200,6 +204,8 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
                 markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerRedClicked)));
             } else if (place.getCat2().equals("A0202")) {
                 markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerBlueClicked)));
+            } else if (place.getCat2().equals("A0205")) {
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerYellowClicked)));
             }
         } else {
             if (place.getCat2().equals("A0101")) {
@@ -208,6 +214,8 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
                 markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerRed)));
             } else if (place.getCat2().equals("A0202")) {
                 markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerBlue)));
+            } else if (place.getCat2().equals("A0205")) {
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, markerYellow)));
             }
         }
 

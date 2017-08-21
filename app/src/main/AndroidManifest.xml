@@ -85,6 +85,10 @@
             android:name=".activity.FeedbackActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity
+            android:name=".activity.HelpActivity"
+            android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>
