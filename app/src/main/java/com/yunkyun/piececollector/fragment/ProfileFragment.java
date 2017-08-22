@@ -16,6 +16,7 @@ import com.yunkyun.piececollector.activity.HelpActivity;
 import com.yunkyun.piececollector.activity.LicenseActivity;
 import com.yunkyun.piececollector.util.AppPreferenceKey;
 import com.yunkyun.piececollector.util.SharedPreferencesService;
+import com.yunkyun.piececollector.util.ToastMaker;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,6 +75,7 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent1);
                 break;
             case R.id.btn_review:
+                ToastMaker.makeShortToast(getContext(), "페이지 준비 중입니다. :)");
                 break;
             case R.id.btn_feedback:
                 Intent intent2 = new Intent(getContext(), FeedbackActivity.class);

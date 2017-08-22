@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="방문한 여행지에서 어플리케이션의 카메라 버튼을 사용하여 사진을 찍으세요."
+        android:text="방문한 여행지에서 지도 하단의 카메라 버튼을 사용하여 사진을 찍으세요."
         android:textColor="@color/SecondaryTextBlack"
         android:textSize="16dp" />
 

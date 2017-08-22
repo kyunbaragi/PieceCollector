@@ -26,8 +26,6 @@ import butterknife.ButterKnife;
 public class HelpActivity extends BaseActivity {
     @BindView(R.id.pager)
     ViewPager viewPager;
-    /*@BindView(R.id.page_indicator)
-    PageIndicatorView pageIndicatorView;*/
     @BindView(R.id.btn_next)
     Button nextButton;
 
@@ -81,18 +79,7 @@ public class HelpActivity extends BaseActivity {
                 }
             }
         });
-
-        //setPageIndicatorView();
-
     }
-
-    /*private void setPageIndicatorView() {
-        pageIndicatorView.setViewPager(viewPager);
-        pageIndicatorView.setSelectedColor(Color.parseColor("#E81751"));
-        pageIndicatorView.setUnselectedColor(Color.parseColor("#fcfcfc"));
-        pageIndicatorView.setInteractiveAnimation(true);
-        pageIndicatorView.setAnimationType(AnimationType.SCALE);
-    }*/
 
     private int getNextItem() {
         return viewPager.getCurrentItem() + 1;
