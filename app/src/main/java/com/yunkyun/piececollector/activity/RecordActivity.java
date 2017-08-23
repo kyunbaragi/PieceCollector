@@ -26,7 +26,6 @@ import com.yunkyun.piececollector.util.ToastMaker;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -57,7 +56,6 @@ public class RecordActivity extends BaseActivity implements EditDialogFragment.N
     private static final String TAG = "RecordActivity";
     private static final int REQUEST_PICK_PHOTO_FROM_ALBUM = 0;
     private Record record;
-    private String memo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,23 +66,12 @@ public class RecordActivity extends BaseActivity implements EditDialogFragment.N
         Intent intent = getIntent();
         if (intent != null) {
             record = intent.getParcelableExtra("record");
+
             Glide.with(this).load(record.getImagePath()).into(photoUI);
+
             titleUI.setText(record.getTitle());
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(record.getCreated());
-
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            String date = String.format("%d. %d. %d.", year, month, day);
-
-            dateUI.setText(date);
-            memo = record.getMemo();
-            if (memo == null) {
-                memo = "메모를 남겨주세요.";
-            }
-            memoUI.setText(memo);
+            dateUI.setText(record.getDateToString());
+            memoUI.setText(record.getMemo());
         }
     }
 
@@ -99,6 +86,7 @@ public class RecordActivity extends BaseActivity implements EditDialogFragment.N
                 showGallery();
                 break;
             case R.id.btn_share:
+                openPolaroidActivity();
                 break;
             case R.id.btn_back:
                 onBackPressed();
@@ -108,12 +96,18 @@ public class RecordActivity extends BaseActivity implements EditDialogFragment.N
         }
     }
 
+    private void openPolaroidActivity() {
+        Intent intent = new Intent(this, PolaroidActivity.class);
+        intent.putExtra("record", record);
+        startActivity(intent);
+    }
+
     private void showEditDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         EditDialogFragment editDialog = new EditDialogFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString(EditDialogFragment.BUNDLE_USER_MEMO_KEY, memo);
+        bundle.putString(EditDialogFragment.BUNDLE_USER_MEMO_KEY, record.getMemo());
 
         editDialog.setArguments(bundle);
         editDialog.show(fragmentManager, EditDialogFragment.TAG);
@@ -148,7 +142,7 @@ public class RecordActivity extends BaseActivity implements EditDialogFragment.N
         }
     }
 
-    public Uri convertContentToFileUri(Context context, Uri uri) throws Exception {
+    private Uri convertContentToFileUri(Context context, Uri uri) throws Exception {
         Cursor cursor = null;
         try {
             cursor = context.getContentResolver().query(uri, null, null, null, null);
@@ -200,7 +194,7 @@ public class RecordActivity extends BaseActivity implements EditDialogFragment.N
 
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("id", String.valueOf(record.getId()));
-        parameters.put("memo", memo);
+        parameters.put("memo", record.getMemo());
 
         NetworkService service = NetworkService.retrofit.create(NetworkService.class);
         Call<okhttp3.ResponseBody> call = service.postMemo(parameters);
@@ -218,8 +212,8 @@ public class RecordActivity extends BaseActivity implements EditDialogFragment.N
     }
 
     private void refreshMemo(String userInput) {
+        record.setMemo(userInput);
         memoUI.setText(userInput);
-        memo = userInput;
     }
 
     @Override

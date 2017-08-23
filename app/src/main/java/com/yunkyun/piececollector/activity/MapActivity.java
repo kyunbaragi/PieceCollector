@@ -83,13 +83,11 @@ import retrofit2.Response;
  * Created by YunKyun on 2017-07-27.
  */
 
-public class MapActivity extends BaseActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
+public class MapActivity extends BaseActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener {
     @BindView(R.id.iv_my_location)
     ImageView myLocation;
     @BindView(R.id.iv_search_by_location)
     ImageView searchByLocation;
-    /*@BindView(R.id.toolbar_map)
-    Toolbar toolbar;*/
 
     View markerBlue;
     View markerRed;
@@ -130,11 +128,9 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         setContentView(R.layout.activity_map);
         ButterKnife.bind(this);
 
-        // 아이콘 이미지 출력
         Glide.with(this).load(R.drawable.ic_tracker).into(myLocation);
         Glide.with(this).load(R.drawable.ic_loading).into(searchByLocation);
 
-        // 여행지, 유저위치 마커 레이아웃 인플레이션
         markerBlue = LayoutInflater.from(this).inflate(R.layout.marker_blue, null);
         markerRed = LayoutInflater.from(this).inflate(R.layout.marker_red, null);
         markerGreen = LayoutInflater.from(this).inflate(R.layout.marker_green, null);
@@ -146,7 +142,6 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
 
         userPositionView = LayoutInflater.from(this).inflate(R.layout.user_position, null);
 
-        // GPS 권한 체크 및 요청
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             PermissionManager.checkPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         }
@@ -166,6 +161,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         map.setMaxZoomPreference(MAX_ZOOM);
         map.setOnMarkerClickListener(this);
         map.setOnMapClickListener(this);
+        map.setOnInfoWindowClickListener(this);
 
         if (!isGpsPossible()) {
             LatLng defaultPosition = new LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
@@ -469,7 +465,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.e(TAG, "onConnectionSuspended() in connectGoogleApi");
+        Log.d(TAG, "onConnectionSuspended() in connectGoogleApi");
     }
 
     @Override
@@ -569,6 +565,14 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
     protected void onDestroy() {
         super.onDestroy();
         googleApiClient.disconnect();
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Place place = (Place) marker.getTag();
+        String url = String.format("https://www.google.co.kr/search?q=%s", place.getTitle());
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
     }
 
     private class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {

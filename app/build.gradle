@@ -53,4 +53,5 @@ dependencies {
     compile 'com.dinuscxj:recyclerrefreshlayout:2.0.5'
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
     compile 'com.github.bmarrdev:android-DecoView-charting:v1.2'
+    compile 'com.kyleduo.switchbutton:library:1.4.6'
 }

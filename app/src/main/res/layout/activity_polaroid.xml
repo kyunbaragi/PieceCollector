@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/LightGray"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorMyPrimaryDark">
+
+        <ImageView
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/ic_close_white" />
+
+        <TextView
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:text="확인"
+            android:textColor="#FFEB3B"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorMyPrimaryDark">
+
+        <LinearLayout
+            android:id="@+id/polaroid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="32dp"
+            android:background="@drawable/bg_polaroid"
+            android:elevation="16dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_polaroid"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:background="@color/White"
+                android:elevation="4dp"
+                android:scaleType="centerCrop">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_below="@+id/iv_polaroid"
+                android:paddingBottom="8dp"
+                android:paddingTop="12dp">
+
+                <TextView
+                    android:id="@+id/tv_memo_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="MEMO"
+                    android:textColor="@color/PrimaryTextBlack"
+                    android:textSize="16sp"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/tv_date_field"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="24dp"
+                    android:text="DATE"
+                    android:textColor="@color/PrimaryTextBlack"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@color/colorMyPrimaryDark">
+
+        <TextView
+            android:id="@+id/tv_gray_scale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="흑백 필터"
+            android:textColor="@color/PrimaryTextWhite"
+            android:textSize="16sp"
+            app:layout_constraintHorizontal_bias="0.40"
+            app:layout_constraintLeft_toRightOf="@+id/tv_memo"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_memo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="메모"
+            android:textColor="@color/PrimaryTextWhite"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="날짜"
+            android:textColor="@color/PrimaryTextWhite"
+            android:textSize="16sp"
+            app:layout_constraintHorizontal_bias="0.60"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_memo" />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/sb_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:checked="true"
+            app:kswBackColor="@color/colorPrimaryDark"
+            app:kswThumbColor="@color/LightGray"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_date"
+            app:layout_constraintRight_toRightOf="@+id/tv_date"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/sb_memo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:checked="true"
+            app:kswBackColor="@color/colorPrimaryDark"
+            app:kswThumbColor="@color/LightGray"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_memo"
+            app:layout_constraintRight_toRightOf="@+id/tv_memo"
+            app:layout_constraintTop_toBottomOf="@+id/tv_memo" />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/sb_gray_scale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:kswBackColor="@color/colorPrimaryDark"
+            app:kswThumbColor="@color/LightGray"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_gray_scale"
+            app:layout_constraintRight_toRightOf="@+id/tv_gray_scale"
+            app:layout_constraintTop_toBottomOf="@+id/tv_gray_scale" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

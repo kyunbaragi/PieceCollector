@@ -49,7 +49,7 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        Glide.with(this).load(R.drawable.logo_splash).into(appLogo);
+        Glide.with(this).load(R.drawable.logo_app).into(appLogo);
         Glide.with(this).load(R.drawable.ic_kakao).into(iconKakao);
     }
 

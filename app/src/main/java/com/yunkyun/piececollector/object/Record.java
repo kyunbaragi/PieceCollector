@@ -68,6 +68,19 @@ public class Record implements Parcelable {
         this.created = created;
     }
 
+    public String getDateToString(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(created);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        String date = String.format("%d. %d. %d.", year, month, day);
+
+        return date;
+    }
+
     @Override
     public String toString() {
         return "Record{" +

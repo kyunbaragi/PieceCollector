@@ -88,7 +88,8 @@
                     android:layout_below="@id/tv_detail_title"
                     android:layout_marginBottom="4dp"
                     android:text="2017. 08. 09."
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
 
             </LinearLayout>
 
@@ -98,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/bottom_panel"
                 android:layout_below="@+id/top_panel"
-                android:text="나에게 광화문은 언제나 새롭다."
+                android:hint="메모를 남겨주세요."
                 android:textColor="@color/SecondaryTextBlack"
                 android:textSize="14sp" />
 
