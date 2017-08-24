@@ -5,6 +5,8 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -20,9 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.kyleduo.switchbutton.SwitchButton;
-import com.yunkyun.piececollector.GrayscaleTransformation;
 import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.object.Record;
 
@@ -99,14 +99,20 @@ public class PolaroidActivity extends BaseActivity {
         grayScaleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                RequestOptions grayScaleOption = RequestOptions.bitmapTransform(new GrayscaleTransformation(getApplicationContext()));
                 if (isChecked) {
-                    Glide.with(getApplicationContext()).load(record.getImagePath()).apply(grayScaleOption).into(polaroid);
+                    setGrayScale(polaroid);
                 } else {
-                    Glide.with(getApplicationContext()).load(record.getImagePath()).into(polaroid);
+                    polaroid.clearColorFilter();
                 }
             }
         });
+    }
+
+    private void setGrayScale(ImageView view){
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);
+        ColorMatrixColorFilter cf = new ColorMatrixColorFilter(matrix);
+        view.setColorFilter(cf);
     }
 
     private void initPolaroidImage() {

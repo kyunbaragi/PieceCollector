@@ -27,7 +27,8 @@ public class CustomApplication extends Application {
         Typekit.getInstance()
                 .addNormal(Typekit.createFromAsset(this, "fonts/NanumSquareR.ttf"))
                 .addBold(Typekit.createFromAsset(this, "fonts/NanumSquareB.ttf"))
-                .addItalic(Typekit.createFromAsset(this, "fonts/NanumBarunpenR.ttf"));
+                .addItalic(Typekit.createFromAsset(this, "fonts/SDMiSaeng.ttf"));
+                // .addItalic(Typekit.createFromAsset(this, "fonts/NanumBarunpenR.ttf"));
 
         SharedPreferencesService.getInstance().load(getApplicationContext());
     }

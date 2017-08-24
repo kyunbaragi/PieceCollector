@@ -88,8 +88,7 @@
                     android:layout_below="@id/tv_detail_title"
                     android:layout_marginBottom="4dp"
                     android:text="2017. 08. 09."
-                    android:textSize="12sp"
-                    android:textStyle="italic" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
