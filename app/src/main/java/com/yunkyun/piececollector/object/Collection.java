@@ -14,8 +14,12 @@ public class Collection implements Parcelable {
     private Long id;
     @SerializedName("title")
     private String title;
+    @SerializedName("prologue")
+    private String prologue;
     @SerializedName("description")
     private String description;
+    @SerializedName("tag")
+    private String tag;
     @SerializedName("image_path")
     private String imagePath;
 
@@ -47,6 +51,22 @@ public class Collection implements Parcelable {
         this.description = description;
     }
 
+    public String getPrologue() {
+        return prologue;
+    }
+
+    public void setPrologue(String prologue) {
+        this.prologue = prologue;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
     public String getImagePath() {
         return imagePath;
     }
@@ -60,7 +80,9 @@ public class Collection implements Parcelable {
         return "Collection{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", prologue='" + prologue + '\'' +
                 ", description='" + description + '\'' +
+                ", tag='" + tag + '\'' +
                 ", imagePath='" + imagePath + '\'' +
                 '}';
     }
@@ -73,7 +95,9 @@ public class Collection implements Parcelable {
     private void readFromParcel(Parcel in) {
         this.id = in.readLong();
         this.title = in.readString();
+        this.prologue = in.readString();
         this.description = in.readString();
+        this.tag = in.readString();
         this.imagePath = in.readString();
     }
 
@@ -81,7 +105,9 @@ public class Collection implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
         dest.writeString(title);
+        dest.writeString(prologue);
         dest.writeString(description);
+        dest.writeString(tag);
         dest.writeString(imagePath);
     }
 

@@ -11,13 +11,26 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_collection"
+        <com.yarolegovich.discretescrollview.DiscreteScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="8dp" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_above="@+id/tv_page_number" />
+
+        <TextView
+            android:id="@+id/tv_page_number"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="32dp"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="01"
+            android:textColor="@color/PrimaryTextWhite"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -27,6 +40,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:SpinKit_Color="#AAE81751" />
+        app:SpinKit_Color="@color/colorAccent" />
 
 </FrameLayout>

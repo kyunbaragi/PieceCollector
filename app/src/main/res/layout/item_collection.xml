@@ -1,32 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    card_view:cardElevation="8dp">
+    android:layout_gravity="center"
+    card_view:cardElevation="0dp">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="8dp"
-        card_view:cardCornerRadius="8dp">
+    <ImageView
+        android:id="@+id/iv_collection_image"
+        android:layout_width="280dp"
+        android:layout_height="420dp"
+        android:scaleType="centerCrop" />
 
-        <LinearLayout
+    <ImageView
+        android:layout_width="280dp"
+        android:layout_height="420dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_gradient_black" />
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="420dp"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/tv_collection_prologue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_above="@+id/tv_collection_title"
+            android:layout_marginBottom="8dp"
+            android:text="별 하나에 담기는 추억"
+            android:textColor="@color/PrimaryTextWhite"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/iv_collection_image"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:background="@color/Transparent"
-                android:scaleType="centerCrop" />
+        <TextView
+            android:id="@+id/tv_collection_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_collection_tag"
+            android:layout_marginBottom="16dp"
+            android:text="여름밤\n별 빛 나들이"
+            android:textColor="@color/PrimaryTextWhite"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_collection_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="#아이와함께 #연인과함께 #추억만들기"
+            android:textColor="@color/PrimaryTextWhite"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-    </android.support.v7.widget.CardView>
+    </RelativeLayout>
 
-</RelativeLayout>
+</android.support.v7.widget.CardView>

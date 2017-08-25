@@ -3,14 +3,17 @@ package com.yunkyun.piececollector.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
+import com.yarolegovich.discretescrollview.Orientation;
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 import com.yunkyun.piececollector.R;
 import com.yunkyun.piececollector.adapter.CollectionRecyclerAdapter;
 import com.yunkyun.piececollector.call.NetworkService;
@@ -23,15 +26,18 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 /**
  * Created by YunKyun on 2017-07-27.
  */
 
-public class CollectionFragment extends Fragment {
-    @BindView(R.id.rv_collection)
-    RecyclerView recyclerView;
+public class CollectionFragment extends Fragment implements DiscreteScrollView.OnItemChangedListener {
+    @BindView(R.id.scroll_view)
+    DiscreteScrollView scrollView;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+    @BindView(R.id.tv_page_number)
+    TextView pageNumber;
 
     public static final String TAG = "CollectionFragment";
     private CollectionRecyclerAdapter adapter;
@@ -62,14 +68,12 @@ public class CollectionFragment extends Fragment {
     }
 
     private void setRecyclerView() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
-
+        scrollView.setOrientation(Orientation.HORIZONTAL);
         adapter = new CollectionRecyclerAdapter(getContext());
-        recyclerView.setAdapter(adapter);
+        scrollView.setAdapter(adapter);
+        scrollView.addOnItemChangedListener(this);
+        scrollView.setItemTransitionTimeMillis(500);
+        scrollView.setItemTransformer(new ScaleTransformer.Builder().setMinScale(0.8f).build());
     }
 
     private void loadCollectionList() {
@@ -95,5 +99,14 @@ public class CollectionFragment extends Fragment {
         adapter.setCollectionList(collectionList);
         adapter.notifyDataSetChanged();
         progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int position) {
+        String index = String.valueOf(position + 1);
+        if(position + 1 < 10) {
+            index = "0" + index;
+        }
+        pageNumber.setText(index);
     }
 }

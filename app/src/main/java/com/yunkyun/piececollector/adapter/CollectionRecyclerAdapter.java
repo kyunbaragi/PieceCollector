@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yunkyun.piececollector.R;
@@ -45,6 +46,9 @@ public class CollectionRecyclerAdapter extends RecyclerView.Adapter<CollectionRe
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Collection collection = collectionList.get(position);
+        holder.prologue.setText(collection.getPrologue());
+        holder.title.setText(collection.getTitle());
+        holder.tag.setText(collection.getTag());
         Glide.with(context).load(collection.getImagePath()).into(holder.image);
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +68,12 @@ public class CollectionRecyclerAdapter extends RecyclerView.Adapter<CollectionRe
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_collection_image)
         ImageView image;
+        @BindView(R.id.tv_collection_prologue)
+        TextView prologue;
+        @BindView(R.id.tv_collection_title)
+        TextView title;
+        @BindView(R.id.tv_collection_tag)
+        TextView tag;
 
         public ViewHolder(View itemView) {
             super(itemView);
